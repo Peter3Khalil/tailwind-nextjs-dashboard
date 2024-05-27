@@ -1,23 +1,18 @@
 'use client';
 import { NAVIGATION_ITEMS } from '@/constants/navigations';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Package2Icon, PanelLeftIcon } from './shared/Icons';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
 const MobileNav = () => {
-  const [open, setOpen] = useState(false);
   const items = Object.entries(NAVIGATION_ITEMS);
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
   return (
-    <Sheet open={open}>
-      <SheetTrigger onClick={() => setOpen((prev) => !prev)} asChild>
+    <Sheet>
+      <SheetTrigger asChild>
         <Button size="icon" variant="outline" className="sm:hidden">
           <PanelLeftIcon className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
