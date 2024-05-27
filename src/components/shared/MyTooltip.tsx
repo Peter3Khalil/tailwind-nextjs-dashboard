@@ -18,6 +18,7 @@ const MyTooltip: FC<MyTooltipProps> = ({
   disableHoverableContent,
   skipDelayDuration,
   content,
+  asChild = false,
   ...props
 }) => {
   return (
@@ -27,7 +28,7 @@ const MyTooltip: FC<MyTooltipProps> = ({
       disableHoverableContent={disableHoverableContent}
     >
       <Tooltip>
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
         <TooltipContent side="right" {...props}>
           {content}
         </TooltipContent>
