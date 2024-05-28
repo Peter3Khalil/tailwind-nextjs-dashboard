@@ -3,48 +3,36 @@ import { NAVIGATION_ITEMS } from '@/constants/navigations';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Package2Icon, PanelLeftIcon } from './shared/Icons';
-import { Button } from './ui/button';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
-const MobileNav = () => {
+import { FC } from 'react';
+interface MobileNavProps extends React.HTMLAttributes<HTMLDivElement> {}
+const MobileNav: FC<MobileNavProps> = ({ className, ...props }) => {
   const items = Object.entries(NAVIGATION_ITEMS);
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="sm:hidden">
-          <PanelLeftIcon className="h-5 w-5" />
-          <span className="sr-only">Toggle Menu</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="sm:max-w-xs">
-        <nav className="grid gap-6 text-lg font-medium">
-          <Link
-            href="/dashboard"
-            className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-          >
-            <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
-            <span className="sr-only">Acme Inc</span>
-          </Link>
-          {items.map(([key, value]) => (
-            <Link
-              key={key}
-              href={value.href}
-              className={cn(
-                'flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground',
-                {
-                  'text-foreground': isActive(value.href),
-                },
-              )}
-            >
-              <value.icon className="h-5 w-5" />
-              {value.name}
-            </Link>
-          ))}
-        </nav>
-      </SheetContent>
-    </Sheet>
+    <nav
+      className={cn(
+        'fixed bottom-6 left-[50%] z-50 flex w-[85%] translate-x-[-50%] items-center justify-center gap-6 rounded-full border bg-transparent px-4 py-2 backdrop-blur-sm sm:hidden',
+        className,
+      )}
+      {...props}
+    >
+      {items.map(([key, value]) => (
+        <Link
+          key={key}
+          href={value.href}
+          className={cn(
+            'flex flex-col items-center text-muted-foreground duration-300',
+            {
+              'scale-110 text-foreground': isActive(value.href),
+            },
+          )}
+        >
+          <value.icon size={20} />
+          <span className="text-xs">{value.name}</span>
+        </Link>
+      ))}
+    </nav>
   );
 };
 

@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 import { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 const rubik = Rubik({
   subsets: ['latin'],
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased ${rubik.className} min-h-svh w-full`}>
+        <NextTopLoader showSpinner={false} color="#f97316" />
         {children}
       </body>
     </html>
