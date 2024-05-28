@@ -97,7 +97,12 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), 'tailwindcss', 'autoprefixer'],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    'tailwindcss',
+    'autoprefixer',
+  ],
 } satisfies Config;
 
 export default config;

@@ -5,4 +5,5 @@ export {
   PanelLeft as PanelLeftIcon,
   Search as SearchIcon,
   Settings as SettingsIcon,
+  ChevronLeft as ArrowLeftIcon,
 } from 'lucide-react';

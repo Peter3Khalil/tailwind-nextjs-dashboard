@@ -1,78 +1,78 @@
 'use client';
 import { NAVIGATION_ITEMS } from '@/constants/navigations';
 import { cn } from '@/lib/utils';
-import { Package2 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ComponentProps, FC } from 'react';
+import { FC, useCallback, useState } from 'react';
+import { ArrowLeftIcon } from './shared/Icons';
 import MyTooltip from './shared/MyTooltip';
 interface SidebarProps extends React.ComponentProps<'aside'> {}
 const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
-  const { settings, ...rest } = NAVIGATION_ITEMS;
-  const items = Object.entries(rest);
+  const [isOpened, setIsOpened] = useState(false);
   const pathname = usePathname();
+  const items = Object.entries(NAVIGATION_ITEMS);
+  const toggleSidebar = useCallback(() => setIsOpened((prev) => !prev), []);
   const isActive = (href: string) => pathname === href;
   return (
     <aside
       className={cn(
-        'fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex',
-        className,
-      )}
-      {...props}
-    >
-      <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-        <Link
-          href="#"
-          className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-        >
-          <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-          <span className="sr-only">Acme Inc</span>
-        </Link>
-        {items.map(([key, value]) => (
-          <MyTooltip content={value.name} key={key}>
-            <NavItem href={value.href} isActive={isActive(value.href)}>
-              <value.icon className="h-5 w-5" />
-              <span className="sr-only">{value.name}</span>
-            </NavItem>
-          </MyTooltip>
-        ))}
-      </nav>
-      <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-        <MyTooltip content={settings.name}>
-          <NavItem href={settings.href} isActive={isActive(settings.href)}>
-            <settings.icon className="h-5 w-5" />
-            <span className="sr-only">{settings.name}</span>
-          </NavItem>
-        </MyTooltip>
-      </nav>
-    </aside>
-  );
-};
-
-interface NavItemProps extends ComponentProps<typeof Link> {
-  isActive?: boolean;
-}
-const NavItem: FC<NavItemProps> = ({
-  children,
-  href,
-  isActive = false,
-  className,
-  ...props
-}) => {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8',
+        'relative hidden w-52 min-w-fit max-w-52 duration-300 sm:block',
         className,
         {
-          'text-foreground': isActive,
+          'w-12': !isOpened,
         },
       )}
       {...props}
     >
-      {children}
-    </Link>
+      <nav className="relative flex h-full w-full flex-col border-r bg-background px-3 pt-12 text-foreground">
+        {items.map(([key, value]) => (
+          <MyTooltip
+            className={cn({
+              hidden: isOpened,
+            })}
+            key={key}
+            content={value.name}
+            side="right"
+          >
+            <Link href={value.href}>
+              <div
+                className={cn(
+                  'prose prose-sm flex items-center rounded p-2 font-medium text-muted-foreground duration-300 hover:bg-accent hover:text-foreground',
+                  {
+                    'bg-accent text-foreground': isActive(value.href),
+                  },
+                )}
+              >
+                <value.icon size={24} className="shrink-0" />
+                <span
+                  className={cn(
+                    'ml-2 w-1 min-w-fit leading-none duration-300',
+                    {
+                      'collapse ml-0 w-0 min-w-0 overflow-hidden': !isOpened,
+                    },
+                  )}
+                >
+                  {value.name}
+                </span>
+              </div>
+            </Link>
+          </MyTooltip>
+        ))}
+      </nav>
+      <MyTooltip asChild content={isOpened ? 'Close' : 'Open'} side="right">
+        <button
+          onClick={toggleSidebar}
+          className="absolute right-0 top-3 z-30 translate-x-[50%] rounded-full border bg-background p-1"
+        >
+          <ArrowLeftIcon
+            size={16}
+            className={cn({
+              'rotate-180 transform': !isOpened,
+            })}
+          />
+        </button>
+      </MyTooltip>
+    </aside>
   );
 };
 
