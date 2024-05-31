@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`antialiased ${rubik.className} min-h-svh w-full`}>
+      <body className={`antialiased ${rubik.className} w-full`}>
         <NextTopLoader showSpinner={false} color="#f97316" />
         {children}
       </body>

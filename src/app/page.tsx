@@ -1,8 +1,12 @@
+'use client';
+import { redirect } from 'next/navigation';
+import React, { useLayoutEffect } from 'react';
+
 const Home = () => {
-  return (
-    <div>
-      <h1 className="flex text-2xl font-bold">Home</h1>
-    </div>
-  );
+  useLayoutEffect(() => {
+    redirect('/dashboard');
+  }, []);
+  return <div>Home</div>;
 };
+
 export default Home;
