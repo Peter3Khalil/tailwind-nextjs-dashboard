@@ -1,4 +1,5 @@
 import '@/app/globals.css';
+import MyQueryClientProvider from '@/providers/query-client-provider';
 import { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
@@ -25,9 +26,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`antialiased ${rubik.className} w-full`}>
-        <NextTopLoader showSpinner={false} color="#f97316" />
-        {children}
+      <body className={`min-h-svh antialiased ${rubik.className} w-full`}>
+        <MyQueryClientProvider>
+          <NextTopLoader showSpinner={false} color="#f97316" />
+          {children}
+        </MyQueryClientProvider>
       </body>
     </html>
   );
