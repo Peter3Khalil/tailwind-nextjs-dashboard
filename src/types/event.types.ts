@@ -1,16 +1,16 @@
-export interface EventResponse {
+export type GetAllEventsResponse = {
   results: number;
   paginationResult: PaginationResult;
   data: Event[];
-}
+};
 
-export interface PaginationResult {
+export type PaginationResult = {
   currentPage: number;
   limit: number;
   numberOfPages: number;
-}
+};
 
-export interface Event {
+export type Event = {
   _id: string;
   organizer: Organizer;
   organizationName: string;
@@ -30,21 +30,21 @@ export interface Event {
   eventStatus: EventStatus;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface Organizer {
+export type Organizer = {
   _id: string;
   name: string;
   email: string;
   phone: string;
-}
+};
 
-export interface EventCategory {
+export type EventCategory = {
   _id: string;
   title: string;
-}
+};
 
-export interface CreateEvent {
+export type CreateEventResponse = {
   organizationName: string;
   organizationWebsite: string;
   organizerPlan: string;
@@ -59,9 +59,9 @@ export interface CreateEvent {
   ticketEventLink: string;
   eventPrice: number;
   eventDescription: string;
-}
+};
 
-export interface DeleteErrorResponse {
+export type DeleteErrorResponse = {
   errors: {
     type: string;
     value: string;
@@ -69,7 +69,7 @@ export interface DeleteErrorResponse {
     path: string;
     location: string;
   }[];
-}
+};
 
 export interface EventAction {
   status: EventStatus;
@@ -77,4 +77,11 @@ export interface EventAction {
   message: string;
 }
 
-export type EventStatus = 'pending' | 'accepted' | 'rejected';
+export type EventStatus = 'pending' | 'accepted' | 'rejected' | 'all';
+
+export type GetAllParamsType = {
+  keyword: string;
+  limit: number;
+  page: number;
+  eventStatus: EventStatus;
+};
