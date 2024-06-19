@@ -13,6 +13,7 @@ const useCustomQuery = <TData = unknown, TError = unknown>(
   return useQuery<TData, TError>(queryKey, queryFn, {
     refetchOnWindowFocus: false,
     retry: false,
+    keepPreviousData: true,
     ...options,
   });
 };

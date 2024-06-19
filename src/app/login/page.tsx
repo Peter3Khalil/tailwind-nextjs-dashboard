@@ -10,27 +10,30 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { login } from '@/features/auth';
-import useMutate from '@/hooks/useMutate';
+import UsersApi from '@/features/UsersApi';
 import { useEffect } from 'react';
+import { useMutation } from 'react-query';
 
 function Login() {
-  const { error, mutate, loading } = useMutate(login);
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const { mutate, isLoading, isError } = useMutation(UsersApi.login, {
+    onSuccess(data) {
+      localStorage.setItem('token', data.data.token);
+      window.location.href = '/dashboard';
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    const res = await mutate({ email, password });
-    if (res) {
-      localStorage.setItem('token', res.token);
-      localStorage.setItem('user', JSON.stringify(res.data));
-      window.location.replace('/dashboard');
-    }
+    mutate({ email, password });
   };
+
   useEffect(() => {
     localStorage.clear();
   }, []);
+
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -55,16 +58,16 @@ function Login() {
             <Label htmlFor="password">Password</Label>
             <Input id="password" name="password" type="password" required />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Loading...' : 'Login'}
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? 'Login...' : 'Login'}
           </Button>
         </form>
       </CardContent>
-      <CardFooter>
-        {!!error && (
+      {isError && (
+        <CardFooter>
           <p className="mx-auto text-destructive">Invalid Email or password</p>
-        )}
-      </CardFooter>
+        </CardFooter>
+      )}
     </Card>
   );
 }
