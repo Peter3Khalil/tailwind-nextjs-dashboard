@@ -48,8 +48,8 @@ class EventsApi {
     return await client.put<EventAction>(`/events/${id}/accept`);
   }
 
-  public reject(id: string) {
-    return client.put<EventAction>(`/events/${id}/reject`);
+  public async reject(id: string) {
+    return await client.put<EventAction>(`/events/${id}/reject`);
   }
 }
 
