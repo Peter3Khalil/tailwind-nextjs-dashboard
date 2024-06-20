@@ -1,5 +1,6 @@
 export type GetAllEventsResponse = {
   results: number;
+  totlaCount: number;
   paginationResult: PaginationResult;
   data: Event[];
 };

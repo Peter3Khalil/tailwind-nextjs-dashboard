@@ -53,7 +53,10 @@ const DataTable = <TData,>({
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell className="text-nowrap text-xs" key={cell.id}>
+                    <TableCell
+                      className="max-w-[200px] overflow-hidden text-ellipsis text-nowrap text-xs"
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

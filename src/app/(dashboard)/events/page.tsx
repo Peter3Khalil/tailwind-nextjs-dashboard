@@ -1,33 +1,59 @@
 'use client';
 import { EventsTableProvider } from '@/app/(dashboard)/events/providers/events-table-provider';
+import {
+  Page,
+  PageContent,
+  PageDescription,
+  PageHeader,
+  PageSection,
+  PageTitle,
+} from '@/components/layouts/PageLayout';
+import CustomBreadcrumb, {
+  BreadcrumbItemType,
+} from '@/components/shared/CustomBreadcrumb';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import EventsTable from './components/EventsTable';
 import PaginationControl from './components/PaginationControl';
-import { useEvents } from './providers/events-provider';
 import Search from './components/Search';
+import { useEvents } from './providers/events-provider';
+
+const breadcrumbItems: BreadcrumbItemType[] = [
+  {
+    name: 'Dashboard',
+    link: '/dashboard',
+  },
+  { name: 'Events', link: '/events' },
+];
 
 const Events = () => {
   const {
     queryResult: { data },
   } = useEvents();
-  const numberOfPages = data?.data.paginationResult.numberOfPages || 0;
-  const limit = data?.data.paginationResult.limit || 0;
-  const total = numberOfPages * limit;
+
   return (
-    <section className="flex w-full flex-1 flex-col gap-3 overflow-auto rounded-md border">
-      <div className="flex items-center justify-between px-4">
-        <h1 className="p-4 text-2xl font-bold">Events({total})</h1>
-        <Button asChild>
-          <Link href="/events/create">Create Event</Link>
-        </Button>
-      </div>
-      <div className="px-4">
-        <Search />
-      </div>
-      <EventsTable />
-      <PaginationControl />
-    </section>
+    <Page>
+      <PageSection>
+        <CustomBreadcrumb
+          breadcrumbPage={'All Events'}
+          breadcrumbItems={breadcrumbItems}
+        />
+      </PageSection>
+      <PageContent>
+        <PageHeader>
+          <div>
+            <PageTitle>Events ({data?.data.totlaCount || 0})</PageTitle>
+            <PageDescription>Manage all events in one place</PageDescription>
+          </div>
+          <Button asChild>
+            <Link href="/events/create">Create Event</Link>
+          </Button>
+        </PageHeader>
+        <Search className="focus:border-primary focus-visible:ring-0 focus-visible:ring-transparent" />
+        <EventsTable />
+        <PaginationControl />
+      </PageContent>
+    </Page>
   );
 };
 
