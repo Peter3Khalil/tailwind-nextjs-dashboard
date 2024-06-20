@@ -21,6 +21,17 @@
     "no-console": "warn",
     "no-var": "error",
     "no-unused-vars": "error",
-    "prefer-const": "error"
+    "prefer-const": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["../../*"],
+            "message": "Please use at least two levels of nesting for imports."
+          }
+        ]
+      }
+    ]
   }
 }
