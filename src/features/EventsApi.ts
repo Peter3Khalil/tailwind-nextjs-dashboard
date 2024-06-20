@@ -18,8 +18,8 @@ class EventsApi {
     return EventsApi.instance;
   }
 
-  public async getAll(params?: Partial<GetAllParamsType>) {
-    return await client.get<GetAllEventsResponse>('/events', {
+  public getAll(params?: Partial<GetAllParamsType>) {
+    return client.get<GetAllEventsResponse>('/events', {
       params: {
         ...params,
         eventStatus:
@@ -28,28 +28,28 @@ class EventsApi {
     });
   }
 
-  public async getOne(id: string) {
-    return await client.get<Event>(`/events/${id}`);
+  public getOne(id: string) {
+    return client.get<Event>(`/events/${id}`);
   }
 
-  public async create(event: Event) {
-    return await client.post<Event>('/events', event);
+  public create(event: Event) {
+    return client.post<Event>('/events', event);
   }
 
-  public async update(id: string, event: Partial<Event>) {
-    return await client.put<Event>(`/events/${id}`, event);
+  public update(id: string, event: Partial<Event>) {
+    return client.put<Event>(`/events/${id}`, event);
   }
 
-  public async delete(id: string) {
-    return await client.delete(`/events/${id}`);
+  public delete(id: string) {
+    return client.delete(`/events/${id}`);
   }
 
-  public async accept(id: string) {
-    return await client.put<EventAction>(`/events/${id}/accept`);
+  public accept(id: string) {
+    return client.put<EventAction>(`/events/${id}/accept`);
   }
 
-  public async reject(id: string) {
-    return await client.put<EventAction>(`/events/${id}/reject`);
+  public reject(id: string) {
+    return client.put<EventAction>(`/events/${id}/reject`);
   }
 }
 

@@ -1,4 +1,5 @@
 import '@/app/globals.css';
+import { Toaster } from '@/components/ui/toaster';
 import MyQueryClientProvider from '@/providers/query-client-provider';
 import { Metadata } from 'next';
 import { Rubik } from 'next/font/google';
@@ -30,6 +31,7 @@ export default function RootLayout({
         <MyQueryClientProvider>
           <NextTopLoader showSpinner={false} color="#f97316" />
           {children}
+          <Toaster />
         </MyQueryClientProvider>
       </body>
     </html>

@@ -1,11 +1,11 @@
 'use client';
-import CellAction from '@/components/shared/CellAction';
-import { CancelIcon, CheckIcon } from '@/components/shared/Icons';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
+import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
+import { useToast } from '@/components/ui/use-toast';
+import { STATUSES } from '@/constants/eventStatuses';
 import EventsApi from '@/features/EventsApi';
-import { Event, EventStatus } from '@/types/event.types';
+import { formatDateTime, toastError } from '@/lib/utils';
+import { Event, EventStatusWithOutAll } from '@/types/event.types';
 import {
   ColumnDef,
   getCoreRowModel,
@@ -14,38 +14,16 @@ import {
 } from '@tanstack/react-table';
 import { createContext, useCallback, useContext, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
+import AcceptButton from '../components/AcceptButton';
+import EventComponent from '../components/EventComponent';
+import RejectButton from '../components/RejectButton';
 import { useEvents } from './events-provider';
-import { cn, formatDateTime } from '@/lib/utils';
-import Link from 'next/link';
-
-type StatusesType = {
-  // eslint-disable-next-line no-unused-vars
-  [key in EventStatusWithOutAll]: { component: JSX.Element };
-};
-type EventStatusWithOutAll = Exclude<EventStatus, 'all'>;
-const statuses: StatusesType = {
-  rejected: {
-    component: (
-      <Badge className="capitalize" variant={'destructive'}>
-        <p className="text-[12px] font-normal">rejected</p>
-      </Badge>
-    ),
-  },
-  pending: {
-    component: (
-      <Badge className="capitalize">
-        <p className="text-[12px] font-normal">Pending</p>
-      </Badge>
-    ),
-  },
-  accepted: {
-    component: (
-      <Badge className="text-xs capitalize" variant={'secondary'}>
-        <p className="text-[12px] font-normal">accepted</p>
-      </Badge>
-    ),
-  },
-};
+import CellAction from '@/app/(dashboard)/events/components/CellAction';
+const eventActions = (id: string) => ({
+  accept: () => EventsApi.accept(id),
+  reject: () => EventsApi.reject(id),
+  delete: () => EventsApi.delete(id),
+});
 
 type ContextType<TData> = {
   table: Table<TData>;
@@ -61,59 +39,36 @@ const EventsTableProvider = ({
   children: React.ReactNode;
   events: Event[];
 }) => {
+  const { toast } = useToast();
+  const printError = useCallback(
+    (error: unknown) => toastError(error, toast),
+    [toast],
+  );
   const queryClient = useQueryClient();
   const {
     params,
     queryResult: { data },
   } = useEvents();
 
-  const handleAccept = useCallback(
-    async (id: string) => {
-      EventsApi.accept(id);
-      queryClient.invalidateQueries('events');
+  const handleEventAction = useCallback(
+    async (action: 'accept' | 'reject' | 'delete', id: string) => {
+      try {
+        await eventActions(id)[action]();
+      } catch (error) {
+        printError(error);
+      } finally {
+        queryClient.invalidateQueries('events');
+      }
     },
-    [queryClient],
-  );
-
-  const handleReject = useCallback(
-    async (id: string) => {
-      EventsApi.reject(id);
-      queryClient.invalidateQueries('events');
-    },
-    [queryClient],
-  );
-
-  const handleDelete = useCallback(
-    async (id: string) => {
-      EventsApi.delete(id);
-      queryClient.invalidateQueries('events');
-    },
-    [queryClient],
+    [printError, queryClient],
   );
 
   const columns: ColumnDef<Event>[] = useMemo(
     () => [
       {
         id: 'select',
-        header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && 'indeterminate')
-            }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label="Select all"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        ),
+        header: ({ table }) => <SelectAllCheckbox table={table} />,
+        cell: ({ row }) => <SelectRowCheckbox row={row} />,
       },
       {
         accessorKey: '_id',
@@ -123,21 +78,7 @@ const EventsTableProvider = ({
       {
         accessorKey: 'eventName',
         header: 'Event Name',
-        cell: ({ getValue, row }) => (
-          <div className="flex w-full flex-col overflow-hidden text-ellipsis text-xs">
-            <h4 className="overflow-hidden text-ellipsis font-semibold">
-              <Link href={`/events/${row.original._id}`}>
-                {getValue() as string}
-              </Link>
-            </h4>
-            <Record
-              label="organization name"
-              value={row.original.organizationName}
-            />
-            <Record label="location" value={row.original.eventAddress} />
-            <Record label="Description" value={row.original.eventDescription} />
-          </div>
-        ),
+        cell: ({ row }) => <EventComponent event={row.original} />,
       },
       {
         accessorKey: 'eventDate',
@@ -150,7 +91,7 @@ const EventsTableProvider = ({
         cell: ({ getValue }) => {
           const status: EventStatusWithOutAll =
             getValue() as EventStatusWithOutAll;
-          return statuses[status].component;
+          return STATUSES[status].component;
         },
       },
       {
@@ -158,36 +99,35 @@ const EventsTableProvider = ({
         header: 'Action',
         cell: ({ row }) => (
           <div className="flex items-center gap-2 text-xs">
-            <Button
-              variant={'secondary'}
-              className="h-auto p-1"
-              onClick={() => handleAccept(row.original._id)}
-            >
-              <CheckIcon size={16} />
-            </Button>
-            <Button
-              variant={'secondary'}
-              className="h-auto p-1"
-              onClick={() => handleReject(row.original._id)}
-            >
-              <CancelIcon size={16} />
-            </Button>
+            {row.original.eventStatus === 'pending' && (
+              <>
+                <AcceptButton
+                  onClick={() => handleEventAction('accept', row.original._id)}
+                />
+                <RejectButton
+                  onClick={() => handleEventAction('reject', row.original._id)}
+                />
+              </>
+            )}
+            {row.original.eventStatus === 'accepted' && (
+              <RejectButton
+                onClick={() => handleEventAction('reject', row.original._id)}
+              />
+            )}
+            {row.original.eventStatus === 'rejected' && (
+              <AcceptButton
+                onClick={() => handleEventAction('accept', row.original._id)}
+              />
+            )}
           </div>
         ),
       },
       {
         id: 'actions',
-        cell: ({ row }) => (
-          <CellAction
-            updateHref={`/events/${row.original._id}`}
-            deleteFn={() => {
-              handleDelete(row.original._id);
-            }}
-          />
-        ),
+        cell: ({ row }) => <CellAction event={row.original} />,
       },
     ],
-    [handleAccept, handleDelete, handleReject],
+    [handleEventAction],
   );
 
   const table = useReactTable({
@@ -226,21 +166,3 @@ const useEventsTable = () => {
 };
 
 export { EventsTableProvider, useEventsTable };
-
-interface RecordProps extends React.HTMLAttributes<HTMLParagraphElement> {
-  label: string;
-  value: string | number;
-}
-const Record = ({ label, value, className, ...props }: RecordProps) => (
-  <p
-    className={cn(
-      'w-full overflow-hidden text-ellipsis text-[0.9em] text-muted-foreground',
-      className,
-    )}
-    title={value.toString()}
-    {...props}
-  >
-    <span className="mr-1 capitalize">{label}: </span>
-    <span className="font-medium">{value}</span>
-  </p>
-);

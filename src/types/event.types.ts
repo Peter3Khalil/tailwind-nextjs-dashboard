@@ -86,3 +86,5 @@ export type GetAllParamsType = {
   page: number;
   eventStatus: EventStatus;
 };
+
+export type EventStatusWithOutAll = Exclude<EventStatus, 'all'>;
