@@ -3,16 +3,16 @@ import { NAVIGATION_ITEMS } from '@/constants/navigations';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { ArrowLeftIcon } from './shared/Icons';
 import MyTooltip from './shared/MyTooltip';
 interface SidebarProps extends React.ComponentProps<'aside'> {}
 const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
   const [isOpened, setIsOpened] = useState(false);
   const pathname = usePathname();
-  const items = Object.entries(NAVIGATION_ITEMS);
+  const items = useMemo(() => Object.entries(NAVIGATION_ITEMS), []);
   const toggleSidebar = useCallback(() => setIsOpened((prev) => !prev), []);
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname.includes(href);
   return (
     <aside
       className={cn(
@@ -24,7 +24,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
       )}
       {...props}
     >
-      <nav className="relative flex h-full w-full flex-col border-r bg-background px-3 pt-12 text-foreground">
+      <nav className="relative flex h-full w-full flex-col gap-2 border-r bg-background px-3 pt-12 text-foreground">
         {items.map(([key, value]) => (
           <MyTooltip
             className={cn({
@@ -43,10 +43,10 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
                   },
                 )}
               >
-                <value.icon size={24} className="shrink-0" />
+                <value.icon size={20} className="shrink-0" />
                 <span
                   className={cn(
-                    'ml-2 w-1 min-w-fit leading-none duration-300',
+                    'ml-2 w-1 min-w-fit text-sm leading-none duration-300',
                     {
                       'collapse ml-0 w-0 min-w-0 overflow-hidden': !isOpened,
                     },
