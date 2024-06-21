@@ -1,3 +1,5 @@
+import EventsApi from '@/app/(dashboard)/events/services/EventsApi';
+import { Event } from '@/app/(dashboard)/events/types/event.types';
 import {
   EditIcon,
   MoreHorizontalIcon,
@@ -11,8 +13,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import EventsApi from '@/features/EventsApi';
-import { Event } from '@/types/event.types';
 import Link from 'next/link';
 import { FC, useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';

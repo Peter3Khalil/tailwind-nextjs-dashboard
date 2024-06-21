@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { EventsProvider } from './providers/events-provider';
 import { PageLayout } from '@/components/layouts/PageLayout';

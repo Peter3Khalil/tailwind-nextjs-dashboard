@@ -1,6 +1,6 @@
+import { Event } from '@/app/(dashboard)/events/types/event.types';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Event } from '@/types/event.types';
 import Link from 'next/link';
 import React, { FC } from 'react';
 

@@ -2,9 +2,12 @@
 import CellAction from '@/app/(dashboard)/events/components/CellAction';
 import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
 import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
-import { STATUSES } from '@/constants/eventStatuses';
+import { STATUSES } from '@/app/(dashboard)/events/constants/EVENT_STATUSES';
 import { formatDateTime } from '@/lib/utils';
-import { Event, EventStatusWithOutAll } from '@/types/event.types';
+import {
+  Event,
+  EventStatusWithOutAll,
+} from '@/app/(dashboard)/events/types/event.types';
 import {
   ColumnDef,
   getCoreRowModel,

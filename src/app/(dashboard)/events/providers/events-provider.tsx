@@ -1,8 +1,11 @@
 'use client';
-import EventsApi from '@/features/EventsApi';
+import EventsApi from '@/app/(dashboard)/events/services/EventsApi';
 import useCustomQuery from '@/hooks/useCustomQuery';
 import useDebounceEffect from '@/hooks/useDebounceEffect';
-import { GetAllEventsResponse, GetAllParamsType } from '@/types/event.types';
+import {
+  GetAllEventsResponse,
+  GetAllParamsType,
+} from '@/app/(dashboard)/events/types/event.types';
 import { AxiosResponse } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { UseQueryResult } from 'react-query';

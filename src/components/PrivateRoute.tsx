@@ -1,5 +1,5 @@
 'use client';
-import { useUser } from '@/providers/user-provider';
+import { useAuth } from '@/providers/auth-provider';
 import React, { useEffect, useState } from 'react';
 interface PrivateRouteProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { isError, isSuccess, isLoading, user } = useUser();
+  const { isError, isSuccess, isLoading, user } = useAuth();
 
   useEffect(() => {
     if (isSuccess) {

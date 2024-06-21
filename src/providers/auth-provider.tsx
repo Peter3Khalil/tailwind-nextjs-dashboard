@@ -1,7 +1,7 @@
 'use client';
-import UsersApi from '@/features/UsersApi';
+import UsersApi from '@/app/(dashboard)/users/services/UsersApi';
+import type { User } from '@/app/(dashboard)/users/types/users.types';
 import useCustomQuery from '@/hooks/useCustomQuery';
-import type { User } from '@/types/users.types';
 import { createContext, useContext } from 'react';
 const initialUser: User = {
   email: '',
@@ -30,7 +30,7 @@ type ContextType = {
   isSuccess: boolean;
   error: unknown;
 };
-const UserContext = createContext<ContextType>({
+const AuthContext = createContext<ContextType>({
   user: initialUser,
   isLoading: true,
   isError: false,
@@ -38,14 +38,14 @@ const UserContext = createContext<ContextType>({
   error: undefined,
 });
 
-const UserProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data, isError, isSuccess, isLoading, error } = useCustomQuery(
     'getUser',
     UsersApi.getMe,
   );
 
   return (
-    <UserContext.Provider
+    <AuthContext.Provider
       value={{
         user: data?.data.data || initialUser,
         isError,
@@ -55,18 +55,18 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       {children}
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
-const useUser = () => {
-  const context = useContext(UserContext);
+const useAuth = () => {
+  const context = useContext(AuthContext);
 
   if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useAuth must be used within a UserProvider');
   }
 
   return context;
 };
 
-export { UserProvider, useUser };
+export { AuthProvider, useAuth };

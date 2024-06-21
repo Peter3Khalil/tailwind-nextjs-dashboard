@@ -1,7 +1,7 @@
+import EventsApi from '@/app/(dashboard)/events/services/EventsApi';
+import { Event } from '@/app/(dashboard)/events/types/event.types';
 import { CheckIcon } from '@/components/shared/Icons';
 import { Button } from '@/components/ui/button';
-import EventsApi from '@/features/EventsApi';
-import { Event } from '@/types/event.types';
 import React, { FC, useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 interface AcceptButtonProps extends React.ComponentProps<typeof Button> {

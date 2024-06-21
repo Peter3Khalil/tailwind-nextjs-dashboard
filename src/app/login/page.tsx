@@ -1,4 +1,5 @@
 'use client';
+import UsersApi from '@/app/(dashboard)/users/services/UsersApi';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,7 +11,6 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import UsersApi from '@/features/UsersApi';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 

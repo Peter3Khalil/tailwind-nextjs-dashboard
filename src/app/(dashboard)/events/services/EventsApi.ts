@@ -1,10 +1,10 @@
-import client from '@/features/client';
+import client from '@/lib/client';
 import type {
   Event,
   EventAction,
   GetAllEventsResponse,
   GetAllParamsType,
-} from '@/types/event.types';
+} from '@/app/(dashboard)/events/types/event.types';
 
 class EventsApi {
   private static instance: EventsApi;
