@@ -63,7 +63,7 @@ const useEvents = () => {
   const context = useContext(EventsContext);
 
   if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useEvents must be used within a EventsProvider');
   }
 
   return context;

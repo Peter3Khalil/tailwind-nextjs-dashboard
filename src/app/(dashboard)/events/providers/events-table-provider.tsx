@@ -127,7 +127,7 @@ const useEventsTable = () => {
   const context = useContext(EventsTableContext);
 
   if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useEventsTable must be used within a EventsTableProvider');
   }
 
   return context;
