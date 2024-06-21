@@ -27,7 +27,7 @@
       {
         "patterns": [
           {
-            "group": ["../../*"],
+            "group": ["../*"],
             "message": "Please use at least two levels of nesting for imports."
           }
         ]

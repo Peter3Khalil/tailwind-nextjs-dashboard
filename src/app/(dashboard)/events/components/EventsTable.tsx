@@ -1,8 +1,8 @@
 'use client';
 import DataTable from '@/components/data-table';
 import { cn } from '@/lib/utils';
-import { useEvents } from '../providers/events-provider';
-import { useEventsTable } from '../providers/events-table-provider';
+import { useEvents } from '@/app/(dashboard)/events/providers/events-provider';
+import { useEventsTable } from '@/app/(dashboard)/events/providers/events-table-provider';
 
 const EventsTable = () => {
   const { table } = useEventsTable();

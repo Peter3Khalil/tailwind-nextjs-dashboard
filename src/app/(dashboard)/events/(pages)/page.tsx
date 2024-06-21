@@ -13,10 +13,10 @@ import CustomBreadcrumb, {
 } from '@/components/shared/CustomBreadcrumb';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import EventsTable from './components/EventsTable';
-import PaginationControl from './components/PaginationControl';
-import Search from './components/Search';
-import { useEvents } from './providers/events-provider';
+import EventsTable from '@/app/(dashboard)/events/components/EventsTable';
+import PaginationControl from '@/app/(dashboard)/events/components/PaginationControl';
+import Search from '@/app/(dashboard)/events/components/Search';
+import { useEvents } from '@/app/(dashboard)/events/providers/events-provider';
 import { RefreshIcon } from '@/components/shared/Icons';
 
 const breadcrumbItems: BreadcrumbItemType[] = [

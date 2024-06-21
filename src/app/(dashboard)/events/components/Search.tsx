@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import React, { FC, useCallback } from 'react';
-import { useEvents } from '../providers/events-provider';
+import { useEvents } from '@/app/(dashboard)/events/providers/events-provider';
 import { cn } from '@/lib/utils';
 interface SearchProps extends React.ComponentProps<typeof Input> {}
 const Search: FC<SearchProps> = ({ className, ...props }) => {

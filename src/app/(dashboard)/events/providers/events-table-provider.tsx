@@ -12,9 +12,9 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { createContext, useContext, useMemo } from 'react';
-import AcceptButton from '../components/AcceptButton';
-import EventComponent from '../components/EventComponent';
-import RejectButton from '../components/RejectButton';
+import AcceptButton from '@/app/(dashboard)/events/components/AcceptButton';
+import EventComponent from '@/app/(dashboard)/events/components/EventComponent';
+import RejectButton from '@/app/(dashboard)/events/components/RejectButton';
 import { useEvents } from './events-provider';
 
 type ContextType<TData> = {

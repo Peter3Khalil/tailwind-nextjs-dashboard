@@ -1,8 +1,8 @@
 import MyPagination from '@/components/shared/MyPagination';
 import SelectLimit from '@/components/shared/SelectLimit';
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { useEvents } from '../providers/events-provider';
-import { useEventsTable } from '../providers/events-table-provider';
+import { useEvents } from '@/app/(dashboard)/events/providers/events-provider';
+import { useEventsTable } from '@/app/(dashboard)/events/providers/events-table-provider';
 
 interface PaginationControlProps extends React.HTMLAttributes<HTMLDivElement> {}
 

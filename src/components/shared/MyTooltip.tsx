@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../ui/tooltip';
+} from '@/components/ui/tooltip';
 interface MyTooltipProps
   extends React.ComponentProps<typeof TooltipProvider>,
     Omit<React.ComponentProps<typeof TooltipContent>, 'content'> {
