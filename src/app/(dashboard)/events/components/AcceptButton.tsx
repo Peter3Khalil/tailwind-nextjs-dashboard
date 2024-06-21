@@ -9,12 +9,12 @@ interface AcceptButtonProps extends React.ComponentProps<typeof Button> {
 }
 const AcceptButton: FC<AcceptButtonProps> = ({ event, ...props }) => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(EventsApi.accept, {
+  const { mutate, isLoading } = useMutation(EventsApi.accept, {
     onSettled: () => {
       queryClient.invalidateQueries('events');
     },
   });
-  const handleAccept = useCallback(async () => {
+  const handleAccept = useCallback(() => {
     mutate(event._id);
   }, [event._id, mutate]);
 
@@ -22,6 +22,7 @@ const AcceptButton: FC<AcceptButtonProps> = ({ event, ...props }) => {
     <Button
       variant={'secondary'}
       onClick={handleAccept}
+      disabled={isLoading}
       className="h-auto p-1"
       {...props}
     >

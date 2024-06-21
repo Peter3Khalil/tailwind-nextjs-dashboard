@@ -9,12 +9,12 @@ interface RejectButtonProps extends React.ComponentProps<typeof Button> {
 }
 const RejectButton: FC<RejectButtonProps> = ({ event, ...props }) => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(EventsApi.reject, {
+  const { mutate, isLoading } = useMutation(EventsApi.reject, {
     onSettled: () => {
       queryClient.invalidateQueries('events');
     },
   });
-  const handleReject = useCallback(async () => {
+  const handleReject = useCallback(() => {
     mutate(event._id);
   }, [event._id, mutate]);
 
@@ -22,6 +22,7 @@ const RejectButton: FC<RejectButtonProps> = ({ event, ...props }) => {
     <Button
       variant={'secondary'}
       onClick={handleReject}
+      disabled={isLoading}
       className="h-auto p-1"
       {...props}
     >

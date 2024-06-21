@@ -1,4 +1,8 @@
-import Link from 'next/link';
+import {
+  EditIcon,
+  MoreHorizontalIcon,
+  TrashIcon,
+} from '@/components/shared/Icons';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -7,17 +11,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  EditIcon,
-  MoreHorizontalIcon,
-  TrashIcon,
-} from '@/components/shared/Icons';
-import { FC, useCallback } from 'react';
-import { Event } from '@/types/event.types';
 import EventsApi from '@/features/EventsApi';
-import { useQueryClient } from 'react-query';
-import { useToast } from '@/components/ui/use-toast';
-import { toastError } from '@/lib/utils';
+import { Event } from '@/types/event.types';
+import Link from 'next/link';
+import { FC, useCallback } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 
 interface CellActionProps
   extends React.ComponentProps<typeof DropdownMenuContent> {
@@ -25,22 +23,16 @@ interface CellActionProps
 }
 const CellAction: FC<CellActionProps> = ({ event, ...props }) => {
   const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  const printError = useCallback(
-    (error: unknown) => toastError(error, toast),
-    [toast],
-  );
-
-  const handleDelete = async () => {
-    try {
-      await EventsApi.delete(event._id);
-    } catch (error) {
-      printError(error);
-    } finally {
+  const { mutate, isLoading } = useMutation(EventsApi.delete, {
+    onSettled: () => {
       queryClient.invalidateQueries('events');
-    }
-  };
+    },
+  });
+
+  const handleDelete = useCallback(() => {
+    mutate(event._id);
+  }, [event._id, mutate]);
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -51,17 +43,22 @@ const CellAction: FC<CellActionProps> = ({ event, ...props }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" {...props}>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-        <Link href={`/events/${event._id}`}>
-          <DropdownMenuItem>
-            <EditIcon className="mr-2 h-4 w-4" /> Update
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuItem
-          onClick={handleDelete}
-          className="cursor-pointer text-destructive hover:text-destructive focus:text-destructive"
-        >
-          <TrashIcon className="mr-2 h-4 w-4" /> Delete
+        <DropdownMenuItem>
+          <Button variant={'ghost'} className="size-auto p-1 text-xs" asChild>
+            <Link href={`/events/${event._id}`}>
+              <EditIcon className="mr-2 size-4 shrink-0" /> Update
+            </Link>
+          </Button>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button
+            variant={'ghost'}
+            className="size-auto p-1 text-xs text-destructive hover:text-destructive"
+            onClick={handleDelete}
+            disabled={isLoading}
+          >
+            <TrashIcon className="mr-2 size-4 shrink-0" /> Delete
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
