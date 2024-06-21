@@ -17,6 +17,7 @@ import EventsTable from './components/EventsTable';
 import PaginationControl from './components/PaginationControl';
 import Search from './components/Search';
 import { useEvents } from './providers/events-provider';
+import { RefreshIcon } from '@/components/shared/Icons';
 
 const breadcrumbItems: BreadcrumbItemType[] = [
   {
@@ -28,7 +29,7 @@ const breadcrumbItems: BreadcrumbItemType[] = [
 
 const Events = () => {
   const {
-    queryResult: { data },
+    queryResult: { data, refetch: refresh, isLoading, isFetching },
   } = useEvents();
 
   return (
@@ -42,7 +43,18 @@ const Events = () => {
       <PageContent>
         <PageHeader>
           <div>
-            <PageTitle>Events ({data?.data.totlaCount || 0})</PageTitle>
+            <div className="flex items-center gap-2">
+              <PageTitle>Events ({data?.data.totlaCount || 0})</PageTitle>
+              <Button
+                variant={'secondary'}
+                size={'icon'}
+                className="aspect-square size-auto rounded-full p-1"
+                onClick={() => refresh()}
+                disabled={isLoading || isFetching}
+              >
+                <RefreshIcon size={16} />
+              </Button>
+            </div>
             <PageDescription>Manage all events in one place</PageDescription>
           </div>
           <Button asChild>
