@@ -1,12 +1,12 @@
 'use client';
 import PrivateRoute from '@/components/PrivateRoute';
 import Sidebar from '@/components/Sidebar';
-import { UserProvider } from '@/providers/user-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 import React from 'react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <UserProvider>
+    <AuthProvider>
       <PrivateRoute>
         <div className="flex h-svh w-full">
           <Sidebar className="shrink-0" />
@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </main>
         </div>
       </PrivateRoute>
-    </UserProvider>
+    </AuthProvider>
   );
 };
 
