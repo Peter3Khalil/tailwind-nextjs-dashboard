@@ -1,35 +1,22 @@
 'use client';
+import EventForm from '@/app/(dashboard)/events/components/EventForm';
+import { useBreadcrumb } from '@/app/(dashboard)/events/providers/breadcrumb-provider';
 import {
-  Page,
   PageContent,
   PageDescription,
   PageHeader,
-  PageSection,
   PageTitle,
 } from '@/components/layouts/PageLayout';
-import CustomBreadcrumb, {
-  BreadcrumbItemType,
-} from '@/components/shared/CustomBreadcrumb';
 import { Button } from '@/components/ui/button';
-import EventForm from '@/app/(dashboard)/events/components/EventForm';
-
-const breadcrumbItems: BreadcrumbItemType[] = [
-  {
-    name: 'Dashboard',
-    link: '/dashboard',
-  },
-  { name: 'Events', link: '/events' },
-];
+import { useEffect } from 'react';
 
 const Create = () => {
+  const { setBreadcrumbPage } = useBreadcrumb();
+  useEffect(() => {
+    setBreadcrumbPage('Create Event');
+  }, [setBreadcrumbPage]);
   return (
-    <Page>
-      <PageSection>
-        <CustomBreadcrumb
-          breadcrumbPage={'Create Event'}
-          breadcrumbItems={breadcrumbItems}
-        />
-      </PageSection>
+    <PageContent>
       <PageHeader>
         <div>
           <PageTitle>Create Event</PageTitle>
@@ -39,12 +26,10 @@ const Create = () => {
         </div>
         <Button>Save</Button>
       </PageHeader>
-      <PageContent>
-        {/* Form goes here */}
+      {/* Form goes here */}
 
-        <EventForm />
-      </PageContent>
-    </Page>
+      <EventForm />
+    </PageContent>
   );
 };
 
