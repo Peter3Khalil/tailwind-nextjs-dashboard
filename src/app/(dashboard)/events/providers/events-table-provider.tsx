@@ -1,10 +1,9 @@
 'use client';
+import CellAction from '@/app/(dashboard)/events/components/CellAction';
 import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
 import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
-import { useToast } from '@/components/ui/use-toast';
 import { STATUSES } from '@/constants/eventStatuses';
-import EventsApi from '@/features/EventsApi';
-import { formatDateTime, toastError } from '@/lib/utils';
+import { formatDateTime } from '@/lib/utils';
 import { Event, EventStatusWithOutAll } from '@/types/event.types';
 import {
   ColumnDef,
@@ -12,18 +11,11 @@ import {
   Table,
   useReactTable,
 } from '@tanstack/react-table';
-import { createContext, useCallback, useContext, useMemo } from 'react';
-import { useQueryClient } from 'react-query';
+import { createContext, useContext, useMemo } from 'react';
 import AcceptButton from '../components/AcceptButton';
 import EventComponent from '../components/EventComponent';
 import RejectButton from '../components/RejectButton';
 import { useEvents } from './events-provider';
-import CellAction from '@/app/(dashboard)/events/components/CellAction';
-const eventActions = (id: string) => ({
-  accept: () => EventsApi.accept(id),
-  reject: () => EventsApi.reject(id),
-  delete: () => EventsApi.delete(id),
-});
 
 type ContextType<TData> = {
   table: Table<TData>;
@@ -39,29 +31,10 @@ const EventsTableProvider = ({
   children: React.ReactNode;
   events: Event[];
 }) => {
-  const { toast } = useToast();
-  const printError = useCallback(
-    (error: unknown) => toastError(error, toast),
-    [toast],
-  );
-  const queryClient = useQueryClient();
   const {
     params,
     queryResult: { data },
   } = useEvents();
-
-  const handleEventAction = useCallback(
-    async (action: 'accept' | 'reject' | 'delete', id: string) => {
-      try {
-        await eventActions(id)[action]();
-      } catch (error) {
-        printError(error);
-      } finally {
-        queryClient.invalidateQueries('events');
-      }
-    },
-    [printError, queryClient],
-  );
 
   const columns: ColumnDef<Event>[] = useMemo(
     () => [
@@ -101,23 +74,15 @@ const EventsTableProvider = ({
           <div className="flex items-center gap-2 text-xs">
             {row.original.eventStatus === 'pending' && (
               <>
-                <AcceptButton
-                  onClick={() => handleEventAction('accept', row.original._id)}
-                />
-                <RejectButton
-                  onClick={() => handleEventAction('reject', row.original._id)}
-                />
+                <AcceptButton event={row.original} />
+                <RejectButton event={row.original} />
               </>
             )}
             {row.original.eventStatus === 'accepted' && (
-              <RejectButton
-                onClick={() => handleEventAction('reject', row.original._id)}
-              />
+              <RejectButton event={row.original} />
             )}
             {row.original.eventStatus === 'rejected' && (
-              <AcceptButton
-                onClick={() => handleEventAction('accept', row.original._id)}
-              />
+              <AcceptButton event={row.original} />
             )}
           </div>
         ),
@@ -127,7 +92,7 @@ const EventsTableProvider = ({
         cell: ({ row }) => <CellAction event={row.original} />,
       },
     ],
-    [handleEventAction],
+    [],
   );
 
   const table = useReactTable({

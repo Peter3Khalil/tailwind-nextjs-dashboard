@@ -1,12 +1,30 @@
-import { Button } from '@/components/ui/button';
-import React, { FC } from 'react';
 import { CheckIcon } from '@/components/shared/Icons';
+import { Button } from '@/components/ui/button';
+import EventsApi from '@/features/EventsApi';
+import { Event } from '@/types/event.types';
+import React, { FC, useCallback } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+interface AcceptButtonProps extends React.ComponentProps<typeof Button> {
+  event: Event;
+}
+const AcceptButton: FC<AcceptButtonProps> = ({ event, ...props }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(EventsApi.accept, {
+    onSettled: () => {
+      queryClient.invalidateQueries('events');
+    },
+  });
+  const handleAccept = useCallback(async () => {
+    mutate(event._id);
+  }, [event._id, mutate]);
 
-const AcceptButton: FC<React.ComponentProps<typeof Button>> = ({
-  ...props
-}) => {
   return (
-    <Button variant={'secondary'} className="h-auto p-1" {...props}>
+    <Button
+      variant={'secondary'}
+      onClick={handleAccept}
+      className="h-auto p-1"
+      {...props}
+    >
       <CheckIcon size={16} />
     </Button>
   );
