@@ -1,6 +1,6 @@
 hint: You should install **nodejs** on your machine
 
-Visit this [link](https://nodejs.org/en/download/) to download and install nodejs
+Visit this [link](https://nodejs.org/en/download/) to download and install Nodejs
 ## Getting Started
 
 First, Install the dependencies:
@@ -17,7 +17,7 @@ npm run dev
 
 Open [http://localhost:4000](http://localhost:4000) with your browser to see the result.
 
-You can change `Port` by modifying script on package.json file to be:
+You can change `Port` by modifying the script on the package.json file to be:
 ```json
 "script":{
     "dev":"next dev -p PORT_NUMBER"
