@@ -1,11 +1,11 @@
 'use client';
-import { useBreadcrumb } from '@/app/(dashboard)/events/providers/breadcrumb-provider';
 import {
   PageContent,
   PageHeader,
   PageTitle,
 } from '@/components/layouts/PageLayout';
-import React, { useEffect } from 'react';
+import { useBreadcrumb } from '@/providers/breadcrumb-provider';
+import { useEffect } from 'react';
 
 const EventDetails = () => {
   const { setBreadcrumbPage } = useBreadcrumb();

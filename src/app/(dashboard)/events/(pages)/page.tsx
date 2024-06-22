@@ -12,12 +12,18 @@ import {
 } from '@/components/layouts/PageLayout';
 import { RefreshIcon } from '@/components/shared/Icons';
 import { Button } from '@/components/ui/button';
+import { useBreadcrumb } from '@/providers/breadcrumb-provider';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 const Events = () => {
   const {
     queryResult: { data, refetch: refresh, isLoading, isFetching },
   } = useEvents();
+  const { setBreadcrumbPage } = useBreadcrumb();
+  useEffect(() => {
+    setBreadcrumbPage('All Events');
+  }, [setBreadcrumbPage]);
 
   return (
     <PageContent>

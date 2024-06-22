@@ -7,7 +7,6 @@ const INITIAL_BREADCRUMB_ITEMS: BreadcrumbItemType[] = [
     name: 'Dashboard',
     link: '/dashboard',
   },
-  { name: 'Events', link: '/events' },
 ];
 
 type ContextType = {
@@ -18,14 +17,14 @@ type ContextType = {
 };
 
 const BreadcrumbContext = React.createContext<ContextType>({
-  breadcrumbPage: 'All Events',
+  breadcrumbPage: '',
   breadcrumbItems: INITIAL_BREADCRUMB_ITEMS,
   setBreadcrumbPage: () => {},
   setBreadcrumbItems: () => {},
 });
 
 const BreadcrumbProvider = ({ children }: { children: React.ReactNode }) => {
-  const [breadcrumbPage, setBreadcrumbPage] = React.useState('All Events');
+  const [breadcrumbPage, setBreadcrumbPage] = React.useState('');
   const [breadcrumbItems, setBreadcrumbItems] = React.useState(
     INITIAL_BREADCRUMB_ITEMS,
   );

@@ -1,6 +1,5 @@
 'use client';
 import EventForm from '@/app/(dashboard)/events/components/EventForm';
-import { useBreadcrumb } from '@/app/(dashboard)/events/providers/breadcrumb-provider';
 import {
   PageContent,
   PageDescription,
@@ -8,6 +7,7 @@ import {
   PageTitle,
 } from '@/components/layouts/PageLayout';
 import { Button } from '@/components/ui/button';
+import { useBreadcrumb } from '@/providers/breadcrumb-provider';
 import { useEffect } from 'react';
 
 const Create = () => {
