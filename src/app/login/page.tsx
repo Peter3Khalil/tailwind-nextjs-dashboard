@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -61,10 +60,15 @@ function Login() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Login</CardTitle>
+        <CardTitle className="font-bold">Login</CardTitle>
         <CardDescription>
           Enter your email below to login to your account.
         </CardDescription>
+        {isError && (
+          <CardDescription className="text-destructive">
+            Invalid Email or password
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -106,11 +110,6 @@ function Login() {
           </form>
         </Form>
       </CardContent>
-      {isError && (
-        <CardFooter>
-          <p className="mx-auto text-destructive">Invalid Email or password</p>
-        </CardFooter>
-      )}
     </Card>
   );
 }
