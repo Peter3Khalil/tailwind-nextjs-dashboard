@@ -26,13 +26,18 @@ export const COLUMNS: ColumnDef<Event>[] = [
   },
   {
     accessorKey: 'eventName',
-    header: 'Event Name',
+    header: 'Name',
     cell: ({ row }) => <EventComponent event={row.original} />,
   },
   {
     accessorKey: 'eventDate',
-    header: 'Event Date',
+    header: 'Date',
     cell: ({ getValue }) => formatDateTime(getValue() as string),
+  },
+  {
+    accessorKey: 'eventPrice',
+    header: 'Price',
+    cell: ({ getValue }) => `$${getValue()}`,
   },
   {
     accessorKey: 'eventStatus',
