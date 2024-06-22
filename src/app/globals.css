@@ -49,6 +49,16 @@
   }
 }
 
+@layer components {
+  .border,
+  .border-t,
+  .border-r,
+  .border-b,
+  .border-l {
+    @apply dark:border-muted-foreground/40;
+  }
+}
+
 html {
   font-size: 16px;
 }

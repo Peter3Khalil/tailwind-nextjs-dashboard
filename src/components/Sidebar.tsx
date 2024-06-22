@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { ArrowLeftIcon } from './shared/Icons';
 import MyTooltip from './shared/MyTooltip';
+import ThemeChanger from '@/components/shared/ThemeChanger';
+import { SIDEBAR_ICON_SIZE } from '@/constants';
 interface SidebarProps extends React.ComponentProps<'aside'> {}
 const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
   const [isOpened, setIsOpened] = useState(false);
@@ -16,7 +18,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
   return (
     <aside
       className={cn(
-        'relative hidden w-52 min-w-fit max-w-52 duration-300 sm:block',
+        'relative hidden h-full w-52 min-w-fit max-w-52 flex-col border-r duration-300 sm:block md:flex',
         className,
         {
           'w-12': !isOpened,
@@ -24,7 +26,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
       )}
       {...props}
     >
-      <nav className="relative flex h-full w-full flex-col gap-2 border-r bg-background px-3 pt-12 text-foreground">
+      <nav className="relative flex flex-1 flex-col gap-2 bg-background px-3 pt-12 text-foreground">
         {items.map(([key, value]) => (
           <MyTooltip
             className={cn({
@@ -37,13 +39,18 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
             <Link href={value.href}>
               <div
                 className={cn(
-                  'prose prose-sm flex items-center rounded p-2 font-medium text-muted-foreground duration-300 hover:bg-accent hover:text-foreground',
+                  'flex items-center rounded p-2 font-medium text-muted-foreground duration-300 hover:bg-accent hover:text-foreground',
                   {
                     'bg-accent text-foreground': isActive(value.href),
                   },
                 )}
               >
-                <value.icon size={20} className="shrink-0" />
+                <value.icon
+                  size={SIDEBAR_ICON_SIZE}
+                  className={cn('mx-auto shrink-0', {
+                    'm-0': isOpened,
+                  })}
+                />
                 <span
                   className={cn(
                     'ml-2 w-1 min-w-fit text-sm leading-none duration-300',
@@ -72,6 +79,9 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
           />
         </button>
       </MyTooltip>
+      <div className="p-3">
+        <ThemeChanger />
+      </div>
     </aside>
   );
 };

@@ -14,4 +14,6 @@ export {
   Trash as TrashIcon,
   Users as UserIcon,
   ChevronsUpDown as ChevronsUpDownIcon,
+  Moon as MoonIcon,
+  Sun as SunIcon,
 } from 'lucide-react';
