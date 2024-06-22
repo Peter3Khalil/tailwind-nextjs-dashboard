@@ -13,18 +13,24 @@ import {
 import { RefreshIcon } from '@/components/shared/Icons';
 import { Button } from '@/components/ui/button';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useMemo } from 'react';
 
 const Events = () => {
   const {
-    queryResult: { data, refetch: refresh, isLoading, isFetching },
+    queryResult: { data, refetch: refresh, isLoading, isFetching, isFetched },
   } = useEvents();
   useSetBreadcrumb({ breadcrumbPath: '/dashboard/events/All Events' });
+  const isFetchingDone = useMemo(
+    () => isFetched && !isFetching,
+    [isFetched, isFetching],
+  );
   return (
     <PageContent>
       <PageHeader>
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex w-fit items-center gap-2">
             <PageTitle>Events ({data?.data.totlaCount || 0})</PageTitle>
             <Button
               variant={'secondary'}
@@ -33,8 +39,19 @@ const Events = () => {
               onClick={() => refresh()}
               disabled={isLoading || isFetching}
             >
-              <RefreshIcon size={16} />
+              <RefreshIcon
+                className={cn({
+                  'animate-spin': isFetching || isLoading,
+                })}
+                size={16}
+              />
             </Button>
+            {isFetchingDone && (
+              <p className="text-xs text-muted-foreground">
+                <strong className="mr-[1px] font-medium">Last updated:</strong>
+                <span className="mx-1">{new Date().toLocaleTimeString()}</span>
+              </p>
+            )}
           </div>
           <PageDescription>Manage all events in one place</PageDescription>
         </div>
