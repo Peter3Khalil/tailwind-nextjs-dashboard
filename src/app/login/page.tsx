@@ -82,7 +82,7 @@ function Login() {
                   <FormControl>
                     <Input placeholder="example@gmail.com" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
