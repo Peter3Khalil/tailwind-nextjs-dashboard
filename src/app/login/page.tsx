@@ -1,5 +1,6 @@
 'use client';
 import UsersApi from '@/app/(dashboard)/users/services/UsersApi';
+import { FORM_FIELDS, FORM_SCHEMA } from '@/app/login/constants/FORM_FIELDS';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -23,14 +24,9 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { z } from 'zod';
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
 function Login() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof FORM_SCHEMA>>({
+    resolver: zodResolver(FORM_SCHEMA),
     defaultValues: {
       email: '',
       password: '',
@@ -49,7 +45,7 @@ function Login() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof FORM_SCHEMA>) => {
     mutate({ ...values });
   };
 
@@ -73,32 +69,22 @@ function Login() {
       <CardContent>
         <Form {...form}>
           <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="example@gmail.com" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
+            {FORM_FIELDS.map((FORM_FIELD) => (
+              <FormField
+                key={FORM_FIELD.name}
+                control={form.control}
+                name={FORM_FIELD.name}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{FORM_FIELD.label}</FormLabel>
+                    <FormControl>
+                      <Input {...FORM_FIELD} {...field} />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+            ))}
 
             <Button
               type="submit"
