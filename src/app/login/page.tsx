@@ -9,12 +9,40 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
 function Login() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onChange',
+  });
+  const {
+    handleSubmit,
+    formState: { isValid },
+  } = form;
+
   const { mutate, isLoading, isError } = useMutation(UsersApi.login, {
     onSuccess(data) {
       localStorage.setItem('token', data.data.token);
@@ -22,12 +50,8 @@ function Login() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    mutate({ email, password });
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    mutate({ ...values });
   };
 
   useEffect(() => {
@@ -37,31 +61,50 @@ function Login() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-2xl font-bold">Login</CardTitle>
         <CardDescription>
           Enter your email below to login to your account.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="grid gap-4" onSubmit={handleSubmit}>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
+        <Form {...form}>
+          <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
               name="email"
-              placeholder="m@example.com"
-              required
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="example@gmail.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" name="password" type="password" required />
-          </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Login...' : 'Login'}
-          </Button>
-        </form>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading || !isValid}
+            >
+              {isLoading ? 'Loading....' : 'Login'}
+            </Button>
+          </form>
+        </Form>
       </CardContent>
       {isError && (
         <CardFooter>
