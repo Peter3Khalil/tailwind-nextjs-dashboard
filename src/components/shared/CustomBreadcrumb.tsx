@@ -17,14 +17,14 @@ export type BreadcrumbItemType = {
 
 interface CustomBreadcrumbProps
   extends React.ComponentProps<typeof Breadcrumb> {
-  breadcrumbItems: BreadcrumbItemType[];
-  breadcrumbPage: string;
+  breadcrumbItems?: BreadcrumbItemType[];
+  breadcrumbPage?: string;
 }
 
 const CustomBreadcrumb: FC<CustomBreadcrumbProps> = ({
   className,
-  breadcrumbItems,
-  breadcrumbPage,
+  breadcrumbItems = [],
+  breadcrumbPage = '',
   ...props
 }) => {
   return (

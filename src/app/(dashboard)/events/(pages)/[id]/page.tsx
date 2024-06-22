@@ -4,14 +4,10 @@ import {
   PageHeader,
   PageTitle,
 } from '@/components/layouts/PageLayout';
-import { useBreadcrumb } from '@/providers/breadcrumb-provider';
-import { useEffect } from 'react';
+import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
 
 const EventDetails = () => {
-  const { setBreadcrumbPage } = useBreadcrumb();
-  useEffect(() => {
-    setBreadcrumbPage('Event Details');
-  }, [setBreadcrumbPage]);
+  useSetBreadcrumb({ breadcrumbPath: '/dashboard/events/Event Details' });
   return (
     <PageContent>
       <PageHeader>

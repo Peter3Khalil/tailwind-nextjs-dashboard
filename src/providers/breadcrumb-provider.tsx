@@ -2,13 +2,6 @@
 import { BreadcrumbItemType } from '@/components/shared/CustomBreadcrumb';
 import React, { Dispatch, SetStateAction } from 'react';
 
-const INITIAL_BREADCRUMB_ITEMS: BreadcrumbItemType[] = [
-  {
-    name: 'Dashboard',
-    link: '/dashboard',
-  },
-];
-
 type ContextType = {
   breadcrumbPage: string;
   breadcrumbItems: BreadcrumbItemType[];
@@ -18,16 +11,16 @@ type ContextType = {
 
 const BreadcrumbContext = React.createContext<ContextType>({
   breadcrumbPage: '',
-  breadcrumbItems: INITIAL_BREADCRUMB_ITEMS,
+  breadcrumbItems: [],
   setBreadcrumbPage: () => {},
   setBreadcrumbItems: () => {},
 });
 
 const BreadcrumbProvider = ({ children }: { children: React.ReactNode }) => {
   const [breadcrumbPage, setBreadcrumbPage] = React.useState('');
-  const [breadcrumbItems, setBreadcrumbItems] = React.useState(
-    INITIAL_BREADCRUMB_ITEMS,
-  );
+  const [breadcrumbItems, setBreadcrumbItems] = React.useState<
+    BreadcrumbItemType[]
+  >([]);
 
   return (
     <BreadcrumbContext.Provider

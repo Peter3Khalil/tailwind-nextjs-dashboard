@@ -7,14 +7,10 @@ import {
   PageTitle,
 } from '@/components/layouts/PageLayout';
 import { Button } from '@/components/ui/button';
-import { useBreadcrumb } from '@/providers/breadcrumb-provider';
-import { useEffect } from 'react';
+import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
 
 const Create = () => {
-  const { setBreadcrumbPage } = useBreadcrumb();
-  useEffect(() => {
-    setBreadcrumbPage('Create Event');
-  }, [setBreadcrumbPage]);
+  useSetBreadcrumb({ breadcrumbPath: '/dashboard/events/Create Event' });
   return (
     <PageContent>
       <PageHeader>
