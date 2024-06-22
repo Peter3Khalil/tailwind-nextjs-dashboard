@@ -1,8 +1,9 @@
 'use client';
+import { INITIAL_QUERY_PARAMS } from '@/app/(pages)/(dashboard)/events/constants/INITIAL_QUERY_PARAMS';
 import EventsApi from '@/app/(pages)/(dashboard)/events/services/EventsApi';
 import {
   GetAllEventsResponse,
-  GetAllParamsType,
+  EventsQueryParams,
 } from '@/app/(pages)/(dashboard)/events/types/event.types';
 import useCustomQuery from '@/hooks/useCustomQuery';
 import useDebounceEffect from '@/hooks/useDebounceEffect';
@@ -10,17 +11,10 @@ import { AxiosResponse } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 
-const INITIAL_PARAMS: GetAllParamsType = {
-  limit: 5,
-  keyword: '',
-  page: 1,
-  eventStatus: 'all',
-};
-
 type ContextType<TData> = {
   queryResult: UseQueryResult<TData, unknown>;
-  setParams: React.Dispatch<React.SetStateAction<GetAllParamsType>>;
-  params: GetAllParamsType;
+  setParams: React.Dispatch<React.SetStateAction<EventsQueryParams>>;
+  params: EventsQueryParams;
 };
 const EventsContext = createContext<
   ContextType<AxiosResponse<GetAllEventsResponse>>
@@ -30,13 +24,13 @@ const EventsContext = createContext<
     unknown
   >,
   setParams: () => {},
-  params: INITIAL_PARAMS,
+  params: INITIAL_QUERY_PARAMS,
 });
 
 const EventsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [params, setParams] = useState<GetAllParamsType>(INITIAL_PARAMS);
+  const [params, setParams] = useState<EventsQueryParams>(INITIAL_QUERY_PARAMS);
   const [debounceParams, setDebounceParams] =
-    useState<GetAllParamsType>(INITIAL_PARAMS);
+    useState<EventsQueryParams>(INITIAL_QUERY_PARAMS);
   const queryResult = useCustomQuery(['events', debounceParams], () =>
     EventsApi.getAll(debounceParams),
   );

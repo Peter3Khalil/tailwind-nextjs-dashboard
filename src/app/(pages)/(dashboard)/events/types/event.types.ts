@@ -80,7 +80,7 @@ export interface EventAction {
 
 export type EventStatus = 'pending' | 'accepted' | 'rejected' | 'all';
 
-export type GetAllParamsType = {
+export type EventsQueryParams = {
   keyword: string;
   limit: number;
   page: number;

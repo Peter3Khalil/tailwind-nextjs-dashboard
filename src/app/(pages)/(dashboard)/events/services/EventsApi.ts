@@ -1,8 +1,8 @@
 import type {
   Event,
   EventAction,
+  EventsQueryParams,
   GetAllEventsResponse,
-  GetAllParamsType,
 } from '@/app/(pages)/(dashboard)/events/types/event.types';
 import client from '@/lib/client';
 
@@ -18,13 +18,13 @@ class EventsApi {
     return EventsApi.instance;
   }
 
-  public getAll(params?: Partial<GetAllParamsType>) {
+  public getAll(params?: Partial<EventsQueryParams>) {
     return client.get<GetAllEventsResponse>('/events', {
       params: {
         ...params,
         eventStatus:
           params?.eventStatus === 'all' ? undefined : params?.eventStatus,
-      } as Partial<GetAllParamsType>,
+      } as Partial<EventsQueryParams>,
     });
   }
 
