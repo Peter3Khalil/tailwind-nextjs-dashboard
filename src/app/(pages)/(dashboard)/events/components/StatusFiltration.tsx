@@ -1,0 +1,90 @@
+'use client';
+
+import { CheckIcon, ChevronsUpDownIcon } from '@/components/shared/Icons';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { useEvents } from '@/app/(pages)/(dashboard)/events/providers/events-provider';
+import { EventStatus } from '@/app/(pages)/(dashboard)/events/types/event.types';
+import { EVENT_STATUSES } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES';
+
+const StatusFiltration = () => {
+  const { setParams } = useEvents();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<EventStatus>('all');
+
+  const handleSelect = useCallback(
+    (currentValue: string) => {
+      setValue(currentValue === value ? 'all' : (currentValue as EventStatus));
+      setOpen(false);
+    },
+    [value],
+  );
+
+  useEffect(() => {
+    setParams((params) => ({
+      ...params,
+      eventStatus: value,
+    }));
+  }, [setParams, value]);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[150px] justify-between text-xs capitalize"
+        >
+          {value
+            ? EVENT_STATUSES.find((STATUS) => STATUS.value === value)?.label
+            : 'Select Status...'}
+          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandInput placeholder="Search Status..." />
+          <CommandList>
+            <CommandEmpty>No Status found.</CommandEmpty>
+            <CommandGroup>
+              {EVENT_STATUSES.map((STATUS) => (
+                <CommandItem
+                  key={STATUS.value}
+                  value={STATUS.value}
+                  onSelect={handleSelect}
+                  className="capitalize"
+                >
+                  <CheckIcon
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === STATUS.value ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                  {STATUS.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+export default StatusFiltration;

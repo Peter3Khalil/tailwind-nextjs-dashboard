@@ -1,9 +1,12 @@
 import { EventStatusWithOutAll } from '@/app/(pages)/(dashboard)/events/types/event.types';
 import { Badge } from '@/components/ui/badge';
 
-type StatusesType = Record<EventStatusWithOutAll, { component: JSX.Element }>;
+type EventStatusesComponentType = Record<
+  EventStatusWithOutAll,
+  { component: JSX.Element }
+>;
 
-export const STATUSES: StatusesType = {
+export const EVENT_STATUSES_COMPONENTS: EventStatusesComponentType = {
   rejected: {
     component: (
       <Badge className="capitalize" variant={'destructive'}>
