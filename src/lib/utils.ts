@@ -32,3 +32,5 @@ export const toastError = (
     description: 'An error occurred while rejecting the event',
   });
 };
+
+export const isClient = () => typeof window !== 'undefined';
