@@ -1,6 +1,6 @@
 'use client';
-import UsersApi from '@/app/(dashboard)/users/services/UsersApi';
-import type { User } from '@/app/(dashboard)/users/types/users.types';
+import UsersApi from '@/app/(pages)/(dashboard)/users/services/UsersApi';
+import type { User } from '@/app/(pages)/(dashboard)/users/types/users.types';
 import useCustomQuery from '@/hooks/useCustomQuery';
 import { createContext, useContext } from 'react';
 const initialUser: User = {
