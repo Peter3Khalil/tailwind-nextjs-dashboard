@@ -1,6 +1,7 @@
 import EventsApi from '@/app/(pages)/(dashboard)/events/services/EventsApi';
 import { Event } from '@/app/(pages)/(dashboard)/events/types/event.types';
 import { CancelIcon } from '@/components/shared/Icons';
+import MyTooltip from '@/components/shared/MyTooltip';
 import { Button } from '@/components/ui/button';
 import React, { FC, useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -19,15 +20,17 @@ const RejectButton: FC<RejectButtonProps> = ({ event, ...props }) => {
   }, [event._id, mutate]);
 
   return (
-    <Button
-      variant={'secondary'}
-      onClick={handleReject}
-      disabled={isLoading}
-      className="h-auto p-1"
-      {...props}
-    >
-      <CancelIcon size={16} />
-    </Button>
+    <MyTooltip content="Reject" className="text-xs">
+      <Button
+        variant={'secondary'}
+        onClick={handleReject}
+        disabled={isLoading}
+        className="h-auto p-1"
+        {...props}
+      >
+        <CancelIcon size={16} />
+      </Button>
+    </MyTooltip>
   );
 };
 
