@@ -76,7 +76,7 @@ function Login() {
                 name={FORM_FIELD.name}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{FORM_FIELD.label}</FormLabel>
+                    <FormLabel className='capitalize'>{FORM_FIELD.label}</FormLabel>
                     <FormControl>
                       <Input {...FORM_FIELD} {...field} />
                     </FormControl>
