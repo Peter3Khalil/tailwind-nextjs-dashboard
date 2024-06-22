@@ -26,7 +26,7 @@ const MyPagination = <TData,>({
         <PaginationItem>
           <PaginationPrevious
             onClick={!table.getCanPreviousPage() ? () => {} : prevPage}
-            className={cn('cursor-pointer', {
+            className={cn('cursor-pointer text-xs', {
               'cursor-not-allowed opacity-50': !table.getCanPreviousPage(),
             })}
           />
@@ -34,7 +34,7 @@ const MyPagination = <TData,>({
         <PaginationItem>
           <PaginationNext
             onClick={!table.getCanNextPage() ? () => {} : nextPage}
-            className={cn('cursor-pointer', {
+            className={cn('cursor-pointer text-xs', {
               'cursor-not-allowed opacity-50': !table.getCanNextPage(),
             })}
           />

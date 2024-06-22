@@ -28,7 +28,7 @@ const PaginationControl: FC<PaginationControlProps> = () => {
         <MyPagination table={table} nextPage={nextPage} prevPage={prevPage} />
         <SelectLimit onValueChange={(value) => setLimit(+value)} />
       </div>
-      <span className="text-sm text-muted-foreground">
+      <span className="text-xs text-muted-foreground">
         Page {table.getState().pagination.pageIndex + 1} of{' '}
         {table.getPageCount()}
       </span>
