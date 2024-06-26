@@ -24,7 +24,7 @@ const useMediaQuery = ({
   const [isMatched, setIsMatched] = React.useState(false);
   useEffect(() => {
     const media = window.matchMedia(
-      `${minWidth ? `(min-width: ${minWidth}px)` : ''} ${maxWidth ? `(max-width: ${maxWidth}px)` : ''}`,
+      `${minWidth ? `(min-width: ${minWidth}px)` : ''} ${minWidth && maxWidth ? 'and' : ''} ${maxWidth ? `(max-width: ${maxWidth}px)` : ''}`,
     );
     if (media.matches) {
       setIsMatched(true);

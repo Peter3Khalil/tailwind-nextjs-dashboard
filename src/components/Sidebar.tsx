@@ -3,22 +3,33 @@ import { NAVIGATION_ITEMS } from '@/constants/NAVIGATION_ITEMS';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { ArrowLeftIcon } from './shared/Icons';
 import MyTooltip from './shared/MyTooltip';
 import ThemeChanger from '@/components/shared/ThemeChanger';
 import { SIDEBAR_ICON_SIZE } from '@/constants';
+import useMediaQuery from '@/hooks/useMediaQuery';
 interface SidebarProps extends React.ComponentProps<'aside'> {}
 const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
   const [isOpened, setIsOpened] = useState(false);
   const pathname = usePathname();
   const items = useMemo(() => Object.entries(NAVIGATION_ITEMS), []);
-  const toggleSidebar = useCallback(() => setIsOpened((prev) => !prev), []);
+  const { isMatched: isTablet } = useMediaQuery({
+    minWidth: 640,
+    maxWidth: 768,
+  });
+  const toggleSidebar = useCallback(() => {
+    if (isTablet) return;
+    setIsOpened((prev) => !prev);
+  }, [isTablet]);
   const isActive = (href: string) => pathname.includes(href);
+  useEffect(() => {
+    if (isTablet) setIsOpened(false);
+  }, [isTablet]);
   return (
     <aside
       className={cn(
-        'relative hidden h-full w-52 min-w-fit max-w-52 flex-col border-r duration-300 sm:block md:flex',
+        'relative hidden h-full w-52 min-w-fit max-w-52 flex-col border-r duration-300 sm:flex',
         className,
         {
           'w-12': !isOpened,
@@ -66,19 +77,21 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
           </MyTooltip>
         ))}
       </nav>
-      <MyTooltip asChild content={isOpened ? 'Close' : 'Open'} side="right">
-        <button
-          onClick={toggleSidebar}
-          className="absolute right-0 top-3 z-30 translate-x-[50%] rounded-full border bg-background p-1"
-        >
-          <ArrowLeftIcon
-            size={16}
-            className={cn({
-              'rotate-180 transform': !isOpened,
-            })}
-          />
-        </button>
-      </MyTooltip>
+      {isTablet ? null : (
+        <MyTooltip asChild content={isOpened ? 'Close' : 'Open'} side="right">
+          <button
+            onClick={toggleSidebar}
+            className="absolute right-0 top-3 z-30 translate-x-[50%] rounded-full border bg-background p-1"
+          >
+            <ArrowLeftIcon
+              size={16}
+              className={cn({
+                'rotate-180 transform': !isOpened,
+              })}
+            />
+          </button>
+        </MyTooltip>
+      )}
       <div className="p-3">
         <ThemeChanger />
       </div>
