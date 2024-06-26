@@ -12,7 +12,7 @@ export {
   Search as SearchIcon,
   Settings as SettingsIcon,
   Trash as TrashIcon,
-  Users as UserIcon,
+  Users as UsersIcon,
   ChevronsUpDown as ChevronsUpDownIcon,
   Moon as MoonIcon,
   Sun as SunIcon,

@@ -1,14 +1,10 @@
+import { GetAllQueryParams, PaginationResult } from '@/types/global.types';
+
 export type GetAllEventsResponse = {
   results: number;
   totlaCount: number;
   paginationResult: PaginationResult;
   data: Event[];
-};
-
-export type PaginationResult = {
-  currentPage: number;
-  limit: number;
-  numberOfPages: number;
 };
 
 export type Event = {
@@ -80,10 +76,7 @@ export interface EventAction {
 
 export type EventStatus = 'pending' | 'accepted' | 'rejected' | 'all';
 
-export type EventsQueryParams = {
-  keyword: string;
-  limit: number;
-  page: number;
+export type EventsQueryParams = GetAllQueryParams & {
   eventStatus: EventStatus;
 };
 

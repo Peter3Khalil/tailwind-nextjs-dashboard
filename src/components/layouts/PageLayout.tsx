@@ -38,7 +38,10 @@ export const PageHeader: FC<React.HTMLAttributes<HTMLDivElement>> = ({
 }) => {
   return (
     <section
-      className={cn('flex items-start justify-between', className)}
+      className={cn(
+        'flex items-start justify-between sm:items-center',
+        className,
+      )}
       {...props}
     >
       {children}
