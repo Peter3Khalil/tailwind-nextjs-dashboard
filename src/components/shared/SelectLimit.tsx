@@ -11,7 +11,7 @@ import {
 interface SelectLimitProps extends React.ComponentProps<typeof Select> {}
 const SelectLimit: FC<SelectLimitProps> = ({ ...props }) => {
   return (
-    <Select {...props}>
+    <Select defaultValue="10" {...props}>
       <SelectTrigger className="w-fit text-xs">
         <SelectValue placeholder="Size" />
       </SelectTrigger>
