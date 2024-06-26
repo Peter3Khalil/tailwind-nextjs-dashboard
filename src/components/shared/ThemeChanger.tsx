@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { MoonIcon, SunIcon } from '@/components/shared/Icons';
 import { useTheme } from 'next-themes';
 
@@ -17,7 +17,13 @@ interface ThemeChangerProps
   extends React.ComponentProps<typeof DropdownMenuTrigger> {}
 
 const ThemeChanger: FC<ThemeChangerProps> = (props) => {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
+  useEffect(() => {
+    if (theme) localStorage.setItem('theme', theme);
+    if (localStorage.getItem('theme')) {
+      setTheme(localStorage.getItem('theme') as string);
+    }
+  }, [setTheme, theme]);
 
   return (
     <DropdownMenu>
