@@ -10,22 +10,97 @@ import {
   PageHeader,
   PageTitle,
 } from '@/components/layouts/PageLayout';
-import { CalendarPlusIcon, RefreshIcon } from '@/components/shared/Icons';
+import {
+  CalendarPlusIcon,
+  CancelIcon,
+  RefreshIcon,
+} from '@/components/shared/Icons';
+import MyTooltip from '@/components/shared/MyTooltip';
 import { Button } from '@/components/ui/button';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const Events = () => {
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [requestState, setRequestState] = useState<'requesting' | 'idle'>(
+    'idle',
+  );
   const {
-    queryResult: { data, refetch: refresh, isLoading, isFetching, isFetched },
+    queryResult: {
+      data,
+      refetch: refresh,
+      isLoading,
+      isFetching,
+      isFetched,
+      isCancelled,
+      cancelQuery,
+    },
   } = useEvents();
   useSetBreadcrumb({ breadcrumbPath: '/dashboard/events/All Events' });
-  const isFetchingDone = useMemo(
+  const isRefetchingDone = useMemo(
     () => isFetched && !isFetching,
     [isFetched, isFetching],
   );
+
+  const isRequesting = useMemo(
+    () => isLoading || isFetching,
+    [isFetching, isLoading],
+  );
+
+  const RequestActionsButtons = useMemo(() => {
+    return {
+      idle: (
+        <>
+          <MyTooltip content="Refresh" asChild>
+            <Button
+              variant={'secondary'}
+              size={'icon'}
+              className="aspect-square size-auto rounded-full p-1"
+              onClick={() => refresh()}
+            >
+              <RefreshIcon size={16} />
+            </Button>
+          </MyTooltip>
+          <p
+            className={cn('text-xs text-muted-foreground', {
+              hidden: !isRefetchingDone,
+            })}
+          >
+            <strong className="mr-[1px] font-medium">Last updated:</strong>
+            <span className="mx-1">{lastUpdated?.toLocaleTimeString()}</span>
+          </p>
+        </>
+      ),
+      requesting: (
+        <MyTooltip content="Cancel" asChild>
+          <Button
+            variant={'secondary'}
+            size={'icon'}
+            className="aspect-square size-auto rounded-full p-1"
+            onClick={cancelQuery}
+          >
+            <CancelIcon size={16} />
+          </Button>
+        </MyTooltip>
+      ),
+    };
+  }, [cancelQuery, isRefetchingDone, lastUpdated, refresh]);
+
+  useEffect(() => {
+    if (isRequesting) {
+      setRequestState('requesting');
+    } else {
+      setRequestState('idle');
+    }
+  }, [isRequesting]);
+
+  useEffect(() => {
+    if (isRefetchingDone && !isCancelled) {
+      setLastUpdated(new Date());
+    }
+  }, [isCancelled, isRefetchingDone]);
   return (
     <PageContent>
       <PageHeader className="sm:items-center">
@@ -33,30 +108,7 @@ const Events = () => {
           <div className="flex w-fit flex-col sm:flex-row sm:items-center sm:gap-2">
             <PageTitle>Events ({data?.data.totlaCount || 0})</PageTitle>
             <div className="flex items-center gap-1">
-              <Button
-                variant={'secondary'}
-                size={'icon'}
-                className="aspect-square size-auto rounded-full p-1"
-                onClick={() => refresh()}
-                disabled={isLoading || isFetching}
-              >
-                <RefreshIcon
-                  className={cn({
-                    'animate-spin': isFetching || isLoading,
-                  })}
-                  size={16}
-                />
-              </Button>
-              {isFetchingDone && (
-                <p className="text-xs text-muted-foreground">
-                  <strong className="mr-[1px] font-medium">
-                    Last updated:
-                  </strong>
-                  <span className="mx-1">
-                    {new Date().toLocaleTimeString()}
-                  </span>
-                </p>
-              )}
+              {RequestActionsButtons[requestState]}
             </div>
           </div>
           <PageDescription>Manage all events in one place</PageDescription>
