@@ -38,7 +38,7 @@ export const PageHeader: FC<React.HTMLAttributes<HTMLDivElement>> = ({
 }) => {
   return (
     <section
-      className={cn('flex items-center justify-between', className)}
+      className={cn('flex items-start justify-between', className)}
       {...props}
     >
       {children}
@@ -91,7 +91,7 @@ export const PageDescription: FC<
   React.HTMLAttributes<HTMLParagraphElement>
 > = ({ children, className, ...props }) => {
   return (
-    <p className={cn('text-sm text-muted-foreground', className)} {...props}>
+    <p className={cn('text-xs text-muted-foreground', className)} {...props}>
       {children}
     </p>
   );

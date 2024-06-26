@@ -17,4 +17,5 @@ export {
   Moon as MoonIcon,
   Sun as SunIcon,
   Loader2 as LoaderIcon,
+  CalendarPlus as CalendarPlusIcon,
 } from 'lucide-react';

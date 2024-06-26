@@ -23,7 +23,7 @@ const PaginationControl: FC<PaginationControlProps> = () => {
   }, [limit, setParams]);
 
   return (
-    <div className="flex w-full items-center justify-between border-t px-6 py-2">
+    <div className="flex w-full items-center justify-between border-t py-2">
       <div className="flex items-center gap-3">
         <MyPagination table={table} nextPage={nextPage} prevPage={prevPage} />
         <SelectLimit onValueChange={(value) => setLimit(+value)} />

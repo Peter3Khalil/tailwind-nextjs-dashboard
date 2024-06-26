@@ -10,7 +10,7 @@ import {
   PageHeader,
   PageTitle,
 } from '@/components/layouts/PageLayout';
-import { RefreshIcon } from '@/components/shared/Icons';
+import { CalendarPlusIcon, RefreshIcon } from '@/components/shared/Icons';
 import { Button } from '@/components/ui/button';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
 import { cn } from '@/lib/utils';
@@ -28,35 +28,44 @@ const Events = () => {
   );
   return (
     <PageContent>
-      <PageHeader>
+      <PageHeader className="sm:items-center">
         <div>
-          <div className="flex w-fit items-center gap-2">
+          <div className="flex w-fit flex-col sm:flex-row sm:items-center sm:gap-2">
             <PageTitle>Events ({data?.data.totlaCount || 0})</PageTitle>
-            <Button
-              variant={'secondary'}
-              size={'icon'}
-              className="aspect-square size-auto rounded-full p-1"
-              onClick={() => refresh()}
-              disabled={isLoading || isFetching}
-            >
-              <RefreshIcon
-                className={cn({
-                  'animate-spin': isFetching || isLoading,
-                })}
-                size={16}
-              />
-            </Button>
-            {isFetchingDone && (
-              <p className="text-xs text-muted-foreground">
-                <strong className="mr-[1px] font-medium">Last updated:</strong>
-                <span className="mx-1">{new Date().toLocaleTimeString()}</span>
-              </p>
-            )}
+            <div className="flex items-center gap-1">
+              <Button
+                variant={'secondary'}
+                size={'icon'}
+                className="aspect-square size-auto rounded-full p-1"
+                onClick={() => refresh()}
+                disabled={isLoading || isFetching}
+              >
+                <RefreshIcon
+                  className={cn({
+                    'animate-spin': isFetching || isLoading,
+                  })}
+                  size={16}
+                />
+              </Button>
+              {isFetchingDone && (
+                <p className="text-xs text-muted-foreground">
+                  <strong className="mr-[1px] font-medium">
+                    Last updated:
+                  </strong>
+                  <span className="mx-1">
+                    {new Date().toLocaleTimeString()}
+                  </span>
+                </p>
+              )}
+            </div>
           </div>
           <PageDescription>Manage all events in one place</PageDescription>
         </div>
         <Button asChild>
-          <Link href="/events/create">Create Event</Link>
+          <Link href="/events/create" className="flex items-center gap-2">
+            <CalendarPlusIcon />
+            <span className="hidden sm:block"> Create Event</span>
+          </Link>
         </Button>
       </PageHeader>
       <Search className="focus:border-primary focus-visible:ring-0 focus-visible:ring-transparent" />
