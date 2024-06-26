@@ -18,4 +18,5 @@ export {
   Sun as SunIcon,
   Loader2 as LoaderIcon,
   CalendarPlus as CalendarPlusIcon,
+  User as UserIcon,
 } from 'lucide-react';

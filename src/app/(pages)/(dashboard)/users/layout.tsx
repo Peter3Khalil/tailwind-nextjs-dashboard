@@ -1,7 +1,8 @@
+import { UsersProvider } from '@/app/(pages)/(dashboard)/users/providers/users-provider';
 import React from 'react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>;
+  return <UsersProvider>{children}</UsersProvider>;
 };
 
 export default Layout;

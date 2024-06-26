@@ -5,7 +5,6 @@ import useCustomQuery from '@/hooks/useCustomQuery';
 import { createContext, useContext } from 'react';
 const initialUser: User = {
   email: '',
-  __v: 0,
   _id: '',
   active: false,
   calendar: [],

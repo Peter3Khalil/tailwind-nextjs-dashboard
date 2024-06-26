@@ -1,6 +1,15 @@
+import { PaginationResult } from '@/types/global.types';
+
 export type LoginResponse = {
   data: User;
   token: string;
+};
+
+export type GetAllUsersResponse = {
+  results: number;
+  totlaCount: number;
+  paginationResult: PaginationResult;
+  data: User[];
 };
 
 export type User = {
@@ -11,14 +20,21 @@ export type User = {
   location: string;
   gender: string;
   phone: string;
-  interests: unknown[];
-  slug: string;
+  interests: Interest[];
+  slug?: string;
   isOAuthUser: boolean;
-  emailVerified: boolean;
-  role: 'user' | 'admin';
-  active: boolean;
-  wishlist: string[];
-  calendar: string[];
-  __v: number;
-  profileImg: string;
+  emailVerifyCode?: string;
+  emailVerifyExpires?: string;
+  emailVerified?: boolean;
+  role: string;
+  active?: boolean;
+  wishlist: unknown[];
+  calendar: unknown[];
+  profileImg?: string;
+  token?: string;
+};
+
+type Interest = {
+  _id: string;
+  title: string;
 };
