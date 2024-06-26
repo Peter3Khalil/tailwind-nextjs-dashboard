@@ -1,9 +1,9 @@
 'use client';
-import EventsTable from '@/app/(pages)/(dashboard)/events/components/EventsTable';
-import PaginationControl from '@/app/(pages)/(dashboard)/events/components/PaginationControl';
-import Search from '@/app/(pages)/(dashboard)/events/components/Search';
 import { useEvents } from '@/app/(pages)/(dashboard)/events/providers/events-provider';
-import { EventsTableProvider } from '@/app/(pages)/(dashboard)/events/providers/events-table-provider';
+import {
+  EventsTableProvider,
+  useEventsTable,
+} from '@/app/(pages)/(dashboard)/events/providers/events-table-provider';
 import {
   PageContent,
   PageDescription,
@@ -11,6 +11,9 @@ import {
   PageTitle,
 } from '@/components/layouts/PageLayout';
 import { CalendarPlusIcon } from '@/components/shared/Icons';
+import PaginationControl from '@/components/shared/PaginationControl';
+import Search from '@/components/shared/Search';
+import TableViewer from '@/components/shared/TableViewer';
 import { Button } from '@/components/ui/button';
 import useRefetch from '@/hooks/useRefetch';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
@@ -18,7 +21,9 @@ import Link from 'next/link';
 
 const Events = () => {
   useSetBreadcrumb({ breadcrumbPath: '/dashboard/events/All Events' });
+  const { table } = useEventsTable();
   const {
+    setParams,
     queryResult: {
       data,
       refetch: refresh,
@@ -58,9 +63,13 @@ const Events = () => {
           </Link>
         </Button>
       </PageHeader>
-      <Search className="focus:border-primary focus-visible:ring-0 focus-visible:ring-transparent" />
-      <EventsTable />
-      <PaginationControl />
+      <Search setParams={setParams} />
+      <TableViewer
+        table={table}
+        isFetching={isFetching}
+        isLoading={isLoading}
+      />
+      <PaginationControl setParams={setParams} table={table} />
     </PageContent>
   );
 };

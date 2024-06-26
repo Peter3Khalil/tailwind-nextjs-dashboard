@@ -1,15 +1,29 @@
-import { useEvents } from '@/app/(pages)/(dashboard)/events/providers/events-provider';
-import { useEventsTable } from '@/app/(pages)/(dashboard)/events/providers/events-table-provider';
 import MyPagination from '@/components/shared/MyPagination';
 import SelectLimit from '@/components/shared/SelectLimit';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { GetAllQueryParams } from '@/types/global.types';
+import { Table } from '@tanstack/react-table';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
-interface PaginationControlProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface PaginationControlProps<TData, U extends GetAllQueryParams>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  table: Table<TData>;
+  setParams: Dispatch<SetStateAction<U>>;
+}
 
-const PaginationControl: FC<PaginationControlProps> = () => {
-  const { table } = useEventsTable();
+const PaginationControl = <TData, U extends GetAllQueryParams>({
+  table,
+  setParams,
+  className,
+  ...props
+}: PaginationControlProps<TData, U>) => {
   const [limit, setLimit] = useState(10);
-  const { setParams } = useEvents();
 
   const nextPage = useCallback(() => {
     setParams((prev) => ({ ...prev, page: prev.page + 1 }));
@@ -23,7 +37,13 @@ const PaginationControl: FC<PaginationControlProps> = () => {
   }, [limit, setParams]);
 
   return (
-    <div className="flex w-full items-center justify-between border-t py-2">
+    <div
+      className={cn(
+        'flex w-full items-center justify-between border-t py-2',
+        className,
+      )}
+      {...props}
+    >
       <div className="flex items-center gap-3">
         <MyPagination table={table} nextPage={nextPage} prevPage={prevPage} />
         <SelectLimit onValueChange={(value) => setLimit(+value)} />

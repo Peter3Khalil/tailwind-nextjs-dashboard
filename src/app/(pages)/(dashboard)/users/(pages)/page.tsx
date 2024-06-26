@@ -1,9 +1,9 @@
 'use client';
-import PaginationControl from '@/app/(pages)/(dashboard)/users/components/PaginationControl';
-import Search from '@/app/(pages)/(dashboard)/users/components/Search';
-import UsersTable from '@/app/(pages)/(dashboard)/users/components/UsersTable';
 import { useUsers } from '@/app/(pages)/(dashboard)/users/providers/users-provider';
-import { UsersTableProvider } from '@/app/(pages)/(dashboard)/users/providers/users-table-provider';
+import {
+  UsersTableProvider,
+  useUsersTable,
+} from '@/app/(pages)/(dashboard)/users/providers/users-table-provider';
 import {
   PageContent,
   PageDescription,
@@ -11,6 +11,9 @@ import {
   PageTitle,
 } from '@/components/layouts/PageLayout';
 import { UserIcon } from '@/components/shared/Icons';
+import PaginationControl from '@/components/shared/PaginationControl';
+import Search from '@/components/shared/Search';
+import TableViewer from '@/components/shared/TableViewer';
 import { Button } from '@/components/ui/button';
 import useRefetch from '@/hooks/useRefetch';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
@@ -18,7 +21,9 @@ import Link from 'next/link';
 
 const Users = () => {
   useSetBreadcrumb({ breadcrumbPath: '/dashboard/users/All Users' });
+  const { table } = useUsersTable();
   const {
+    setParams,
     queryResult: {
       data,
       refetch: refresh,
@@ -58,9 +63,13 @@ const Users = () => {
           </Link>
         </Button>
       </PageHeader>
-      <Search className="focus:border-primary focus-visible:ring-0 focus-visible:ring-transparent" />
-      <UsersTable />
-      <PaginationControl />
+      <Search setParams={setParams} />
+      <TableViewer
+        table={table}
+        isFetching={isFetching}
+        isLoading={isLoading}
+      />
+      <PaginationControl setParams={setParams} table={table} />
     </PageContent>
   );
 };

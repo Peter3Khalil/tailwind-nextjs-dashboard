@@ -35,6 +35,9 @@ class UsersApi {
   public getMe(config?: AxiosRequestConfig) {
     return client.get<Omit<LoginResponse, 'token'>>('/users/getMe', config);
   }
+  public delete(id: string, config?: AxiosRequestConfig) {
+    return client.delete(`/users/${id}`, config);
+  }
 
   public login({
     email,

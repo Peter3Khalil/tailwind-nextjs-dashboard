@@ -1,13 +1,14 @@
 import AcceptButton from '@/app/(pages)/(dashboard)/events/components/AcceptButton';
-import CellAction from '@/app/(pages)/(dashboard)/events/components/CellAction';
 import EventComponent from '@/app/(pages)/(dashboard)/events/components/EventComponent';
 import RejectButton from '@/app/(pages)/(dashboard)/events/components/RejectButton';
 import StatusFiltration from '@/app/(pages)/(dashboard)/events/components/StatusFiltration';
 import { EVENT_STATUSES_COMPONENTS } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES_COMPONENTS';
+import EventsApi from '@/app/(pages)/(dashboard)/events/services/EventsApi';
 import {
   Event,
   EventStatusWithOutAll,
 } from '@/app/(pages)/(dashboard)/events/types/event.types';
+import CellAction from '@/components/shared/CellAction';
 import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
 import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
 import { formatDateTime } from '@/lib/utils';
@@ -69,6 +70,13 @@ export const COLUMNS: ColumnDef<Event>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <CellAction event={row.original} />,
+    cell: ({ row }) => (
+      <CellAction
+        deleteFunction={EventsApi.delete}
+        invalidateKey="events"
+        updateHref={`/events/${row.original._id}`}
+        model={row.original}
+      />
+    ),
   },
 ];
