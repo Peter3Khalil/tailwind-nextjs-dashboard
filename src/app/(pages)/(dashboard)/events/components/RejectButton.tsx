@@ -1,6 +1,6 @@
 import EventsApi from '@/app/(pages)/(dashboard)/events/services/EventsApi';
 import { Event } from '@/app/(pages)/(dashboard)/events/types/event.types';
-import { CancelIcon } from '@/components/shared/Icons';
+import { CancelIcon, LoaderIcon } from '@/components/shared/Icons';
 import MyTooltip from '@/components/shared/MyTooltip';
 import { Button } from '@/components/ui/button';
 import React, { FC, useCallback } from 'react';
@@ -10,6 +10,7 @@ interface RejectButtonProps extends React.ComponentProps<typeof Button> {
 }
 const RejectButton: FC<RejectButtonProps> = ({ event, ...props }) => {
   const queryClient = useQueryClient();
+  //TODO: Implement Optimistic Update
   const { mutate, isLoading } = useMutation(EventsApi.reject, {
     onSettled: () => {
       queryClient.invalidateQueries('events');
@@ -28,7 +29,11 @@ const RejectButton: FC<RejectButtonProps> = ({ event, ...props }) => {
         className="h-auto p-1"
         {...props}
       >
-        <CancelIcon size={16} />
+        {isLoading ? (
+          <LoaderIcon size={16} className="animate-spin" />
+        ) : (
+          <CancelIcon size={16} />
+        )}{' '}
       </Button>
     </MyTooltip>
   );

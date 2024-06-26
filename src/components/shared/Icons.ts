@@ -16,4 +16,5 @@ export {
   ChevronsUpDown as ChevronsUpDownIcon,
   Moon as MoonIcon,
   Sun as SunIcon,
+  Loader2 as LoaderIcon,
 } from 'lucide-react';
