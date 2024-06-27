@@ -1,5 +1,4 @@
-import { EVENT_STATUSES_COMPONENTS } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES_COMPONENTS';
-
+import { EVENT_STATUSES_COMPONENTS } from '@/app/(dashboard)/events/constants/EVENT_STATUSES_COMPONENTS';
 import AcceptButton from '@/components/events/AcceptButton';
 import EventComponent from '@/components/events/EventComponent';
 import RejectButton from '@/components/events/RejectButton';

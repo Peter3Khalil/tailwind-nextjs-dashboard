@@ -3,7 +3,7 @@
 import { CheckIcon, ChevronsUpDownIcon } from '@/components/shared/Icons';
 import { useCallback, useEffect, useState } from 'react';
 
-import { EVENT_STATUSES } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES';
+import { EVENT_STATUSES } from '@/app/(dashboard)/events/constants/EVENT_STATUSES';
 import { Button } from '@/components/ui/button';
 import {
   Command,

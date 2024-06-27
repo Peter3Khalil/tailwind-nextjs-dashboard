@@ -1,5 +1,5 @@
 'use client';
-import { COLUMNS } from '@/app/(pages)/(dashboard)/users/constants/COLUMNS';
+import { COLUMNS } from '@/providers/users/COLUMNS';
 import { useUsers } from '@/providers/users/users-provider';
 import { User } from '@/types/users.types';
 import { getCoreRowModel, Table, useReactTable } from '@tanstack/react-table';

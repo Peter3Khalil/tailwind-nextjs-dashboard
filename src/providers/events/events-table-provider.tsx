@@ -1,9 +1,9 @@
 'use client';
-import { COLUMNS } from '@/app/(pages)/(dashboard)/events/constants/COLUMNS';
+import { COLUMNS } from '@/providers/events/COLUMNS';
+import { Event } from '@/types/event.types';
 import { getCoreRowModel, Table, useReactTable } from '@tanstack/react-table';
 import { createContext, useContext } from 'react';
 import { useEvents } from './events-provider';
-import { Event } from '@/types/event.types';
 
 type ContextType<TData> = {
   table: Table<TData>;

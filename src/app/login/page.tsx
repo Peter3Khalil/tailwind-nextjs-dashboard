@@ -1,8 +1,6 @@
 'use client';
-import {
-  FORM_FIELDS,
-  FORM_SCHEMA,
-} from '@/app/(pages)/login/constants/FORM_FIELDS';
+
+import { FORM_SCHEMA, FORM_FIELDS } from '@/app/login/constants/FORM_FIELDS';
 import { Button } from '@/components/ui/button';
 import {
   Card,
