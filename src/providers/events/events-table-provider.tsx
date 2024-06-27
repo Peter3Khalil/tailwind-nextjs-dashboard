@@ -1,31 +1,31 @@
 'use client';
-import { COLUMNS } from '@/app/(pages)/(dashboard)/users/constants/COLUMNS';
-import { useUsers } from '@/app/(pages)/(dashboard)/users/providers/users-provider';
-import { User } from '@/app/(pages)/(dashboard)/users/types/users.types';
+import { COLUMNS } from '@/app/(pages)/(dashboard)/events/constants/COLUMNS';
 import { getCoreRowModel, Table, useReactTable } from '@tanstack/react-table';
 import { createContext, useContext } from 'react';
+import { useEvents } from './events-provider';
+import { Event } from '@/types/event.types';
 
 type ContextType<TData> = {
   table: Table<TData>;
 };
-const UsersTableContext = createContext<ContextType<User>>({
-  table: {} as Table<User>,
+const EventsTableContext = createContext<ContextType<Event>>({
+  table: {} as Table<Event>,
 });
 
-const UsersTableProvider = ({
+const EventsTableProvider = ({
   children,
-  users = [],
+  events = [],
 }: {
   children: React.ReactNode;
-  users: User[];
+  events: Event[];
 }) => {
   const {
     params,
     queryResult: { data },
-  } = useUsers();
+  } = useEvents();
 
   const table = useReactTable({
-    data: users,
+    data: events,
     columns: COLUMNS,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -39,24 +39,24 @@ const UsersTableProvider = ({
   });
 
   return (
-    <UsersTableContext.Provider
+    <EventsTableContext.Provider
       value={{
         table,
       }}
     >
       {children}
-    </UsersTableContext.Provider>
+    </EventsTableContext.Provider>
   );
 };
 
-const useUsersTable = () => {
-  const context = useContext(UsersTableContext);
+const useEventsTable = () => {
+  const context = useContext(EventsTableContext);
 
   if (context === undefined) {
-    throw new Error('useUsersTable must be used within a UsersTableProvider');
+    throw new Error('useEventsTable must be used within a EventsTableProvider');
   }
 
   return context;
 };
 
-export { UsersTableProvider, useUsersTable };
+export { EventsTableProvider, useEventsTable };

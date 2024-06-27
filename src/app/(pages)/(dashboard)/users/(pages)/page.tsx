@@ -1,9 +1,4 @@
 'use client';
-import { useUsers } from '@/app/(pages)/(dashboard)/users/providers/users-provider';
-import {
-  UsersTableProvider,
-  useUsersTable,
-} from '@/app/(pages)/(dashboard)/users/providers/users-table-provider';
 import {
   PageContent,
   PageDescription,
@@ -17,6 +12,11 @@ import TableViewer from '@/components/shared/TableViewer';
 import { Button } from '@/components/ui/button';
 import useRefetch from '@/hooks/useRefetch';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
+import { useUsers } from '@/providers/users/users-provider';
+import {
+  UsersTableProvider,
+  useUsersTable,
+} from '@/providers/users/users-table-provider';
 import Link from 'next/link';
 
 const Users = () => {

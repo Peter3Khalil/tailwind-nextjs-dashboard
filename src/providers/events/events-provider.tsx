@@ -1,14 +1,16 @@
 'use client';
-import { INITIAL_QUERY_PARAMS } from '@/app/(pages)/(dashboard)/events/constants/INITIAL_QUERY_PARAMS';
-import EventsApi from '@/app/(pages)/(dashboard)/events/services/EventsApi';
-import {
-  EventsQueryParams,
-  GetAllEventsResponse,
-} from '@/app/(pages)/(dashboard)/events/types/event.types';
+import { DEFAULT_QUERY_PARAMS } from '@/constants';
 import useCustomQuery, { UseCustomQueryResult } from '@/hooks/useCustomQuery';
 import useDebounceEffect from '@/hooks/useDebounceEffect';
+import EventsApi from '@/services/EventsApi';
+import { EventsQueryParams, GetAllEventsResponse } from '@/types/event.types';
 import { AxiosResponse } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
+
+const INITIAL_QUERY_PARAMS: EventsQueryParams = {
+  ...DEFAULT_QUERY_PARAMS,
+  eventStatus: 'all',
+};
 
 type ContextType<TData> = {
   queryResult: UseCustomQueryResult<TData, unknown>;

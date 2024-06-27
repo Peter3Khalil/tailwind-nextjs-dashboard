@@ -1,10 +1,10 @@
 'use client';
-import { INITIAL_QUERY_PARAMS } from '@/app/(pages)/(dashboard)/users/constants/INITIAL_QUERY_PARAMS';
-import UsersApi from '@/app/(pages)/(dashboard)/users/services/UsersApi';
-import { GetAllUsersResponse } from '@/app/(pages)/(dashboard)/users/types/users.types';
+import { DEFAULT_QUERY_PARAMS } from '@/constants';
 import useCustomQuery, { UseCustomQueryResult } from '@/hooks/useCustomQuery';
 import useDebounceEffect from '@/hooks/useDebounceEffect';
+import UsersApi from '@/services/UsersApi';
 import { GetAllQueryParams } from '@/types/global.types';
+import { GetAllUsersResponse } from '@/types/users.types';
 import { AxiosResponse } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -21,13 +21,13 @@ const UsersContext = createContext<
     unknown
   >,
   setParams: () => {},
-  params: INITIAL_QUERY_PARAMS,
+  params: DEFAULT_QUERY_PARAMS,
 });
 
 const UsersProvider = ({ children }: { children: React.ReactNode }) => {
-  const [params, setParams] = useState<GetAllQueryParams>(INITIAL_QUERY_PARAMS);
+  const [params, setParams] = useState<GetAllQueryParams>(DEFAULT_QUERY_PARAMS);
   const [debounceParams, setDebounceParams] =
-    useState<GetAllQueryParams>(INITIAL_QUERY_PARAMS);
+    useState<GetAllQueryParams>(DEFAULT_QUERY_PARAMS);
   const queryResult = useCustomQuery(['users', debounceParams], ({ signal }) =>
     UsersApi.getAll(debounceParams, { signal }),
   );

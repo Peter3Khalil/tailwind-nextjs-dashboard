@@ -1,17 +1,15 @@
-import AcceptButton from '@/app/(pages)/(dashboard)/events/components/AcceptButton';
-import EventComponent from '@/app/(pages)/(dashboard)/events/components/EventComponent';
-import RejectButton from '@/app/(pages)/(dashboard)/events/components/RejectButton';
-import StatusFiltration from '@/app/(pages)/(dashboard)/events/components/StatusFiltration';
 import { EVENT_STATUSES_COMPONENTS } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES_COMPONENTS';
-import EventsApi from '@/app/(pages)/(dashboard)/events/services/EventsApi';
-import {
-  Event,
-  EventStatusWithOutAll,
-} from '@/app/(pages)/(dashboard)/events/types/event.types';
+
+import AcceptButton from '@/components/events/AcceptButton';
+import EventComponent from '@/components/events/EventComponent';
+import RejectButton from '@/components/events/RejectButton';
+import StatusFiltration from '@/components/events/StatusFiltration';
 import CellAction from '@/components/shared/CellAction';
 import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
 import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
 import { formatDateTime } from '@/lib/utils';
+import EventsApi from '@/services/EventsApi';
+import type { EventStatusWithOutAll, Event } from '@/types/event.types';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const COLUMNS: ColumnDef<Event>[] = [

@@ -1,5 +1,5 @@
-import { EventStatusWithOutAll } from '@/app/(pages)/(dashboard)/events/types/event.types';
 import { Badge } from '@/components/ui/badge';
+import { EventStatusWithOutAll } from '@/types/event.types';
 
 type EventStatusesComponentType = Record<
   EventStatusWithOutAll,

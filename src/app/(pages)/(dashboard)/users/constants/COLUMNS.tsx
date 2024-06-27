@@ -1,8 +1,8 @@
-import UsersApi from '@/app/(pages)/(dashboard)/users/services/UsersApi';
-import { User } from '@/app/(pages)/(dashboard)/users/types/users.types';
 import CellAction from '@/components/shared/CellAction';
 import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
 import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
+import UsersApi from '@/services/UsersApi';
+import { User } from '@/types/users.types';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const COLUMNS: ColumnDef<User>[] = [

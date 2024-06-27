@@ -1,14 +1,19 @@
-import { APP_FONT } from '@/app/constants';
-import { META_DATA } from '@/app/constants/META_DATA';
 import '@/app/globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import { APP_FONT } from '@/constants';
 import MyQueryClientProvider from '@/providers/query-client-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
-export const metadata: Metadata = META_DATA;
+export const metadata: Metadata = {
+  title: {
+    default: 'Admin Dashboard',
+    template: '%s | Admin Dashboard',
+  },
+  description: 'Admin Dashboard',
+};
 
 export default function RootLayout({
   children,

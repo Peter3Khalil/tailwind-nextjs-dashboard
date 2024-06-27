@@ -1,4 +1,4 @@
-import { UsersProvider } from '@/app/(pages)/(dashboard)/users/providers/users-provider';
+import { UsersProvider } from '@/providers/users/users-provider';
 import React from 'react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

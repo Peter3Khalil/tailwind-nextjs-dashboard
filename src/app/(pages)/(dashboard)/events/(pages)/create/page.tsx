@@ -1,5 +1,5 @@
 'use client';
-import EventForm from '@/app/(pages)/(dashboard)/events/components/EventForm';
+import EventForm from '@/components/events/EventForm';
 import {
   PageContent,
   PageDescription,

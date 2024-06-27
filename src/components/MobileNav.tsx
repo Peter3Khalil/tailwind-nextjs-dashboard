@@ -1,12 +1,11 @@
 'use client';
-import { NAVIGATION_ITEMS } from '@/constants/NAVIGATION_ITEMS';
+import { NAVIGATION_ITEMS } from '@/constants';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FC } from 'react';
 interface MobileNavProps extends React.HTMLAttributes<HTMLDivElement> {}
 const MobileNav: FC<MobileNavProps> = ({ className, ...props }) => {
-  const items = Object.entries(NAVIGATION_ITEMS);
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
   return (
@@ -17,7 +16,7 @@ const MobileNav: FC<MobileNavProps> = ({ className, ...props }) => {
       )}
       {...props}
     >
-      {items.map(([key, value]) => (
+      {Object.entries(NAVIGATION_ITEMS).map(([key, value]) => (
         <Link
           key={key}
           href={value.href}

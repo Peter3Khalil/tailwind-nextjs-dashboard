@@ -1,8 +1,9 @@
 'use client';
 
 import { CheckIcon, ChevronsUpDownIcon } from '@/components/shared/Icons';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { EVENT_STATUSES } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -18,9 +19,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { useEvents } from '@/app/(pages)/(dashboard)/events/providers/events-provider';
-import { EventStatus } from '@/app/(pages)/(dashboard)/events/types/event.types';
-import { EVENT_STATUSES } from '@/app/(pages)/(dashboard)/events/constants/EVENT_STATUSES';
+import { useEvents } from '@/providers/events/events-provider';
+import { EventStatus } from '@/types/event.types';
 
 const StatusFiltration = () => {
   const { setParams } = useEvents();

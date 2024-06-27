@@ -1,10 +1,9 @@
-import type {
-  Event,
-  EventAction,
+import client from '@/lib/client';
+import {
   EventsQueryParams,
   GetAllEventsResponse,
-} from '@/app/(pages)/(dashboard)/events/types/event.types';
-import client from '@/lib/client';
+  EventAction,
+} from '@/types/event.types';
 import { AxiosRequestConfig } from 'axios';
 
 class EventsApi {

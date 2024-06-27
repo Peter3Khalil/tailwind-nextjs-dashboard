@@ -1,9 +1,4 @@
 'use client';
-import { useEvents } from '@/app/(pages)/(dashboard)/events/providers/events-provider';
-import {
-  EventsTableProvider,
-  useEventsTable,
-} from '@/app/(pages)/(dashboard)/events/providers/events-table-provider';
 import {
   PageContent,
   PageDescription,
@@ -17,6 +12,11 @@ import TableViewer from '@/components/shared/TableViewer';
 import { Button } from '@/components/ui/button';
 import useRefetch from '@/hooks/useRefetch';
 import useSetBreadcrumb from '@/hooks/useSetBreadcrumb';
+import { useEvents } from '@/providers/events/events-provider';
+import {
+  EventsTableProvider,
+  useEventsTable,
+} from '@/providers/events/events-table-provider';
 import Link from 'next/link';
 
 const Events = () => {

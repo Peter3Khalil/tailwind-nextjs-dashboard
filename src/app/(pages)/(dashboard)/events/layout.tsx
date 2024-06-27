@@ -1,6 +1,6 @@
 'use client';
+import { EventsProvider } from '@/providers/events/events-provider';
 import React from 'react';
-import { EventsProvider } from './providers/events-provider';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return <EventsProvider>{children}</EventsProvider>;

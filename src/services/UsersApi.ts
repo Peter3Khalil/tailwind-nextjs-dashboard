@@ -1,9 +1,6 @@
-import {
-  GetAllUsersResponse,
-  LoginResponse,
-} from '@/app/(pages)/(dashboard)/users/types/users.types';
 import client from '@/lib/client';
 import { GetAllQueryParams } from '@/types/global.types';
+import { GetAllUsersResponse, LoginResponse } from '@/types/users.types';
 import { AxiosRequestConfig } from 'axios';
 
 class UsersApi {

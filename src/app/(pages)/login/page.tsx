@@ -1,5 +1,4 @@
 'use client';
-import UsersApi from '@/app/(pages)/(dashboard)/users/services/UsersApi';
 import {
   FORM_FIELDS,
   FORM_SCHEMA,
@@ -21,6 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import UsersApi from '@/services/UsersApi';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';

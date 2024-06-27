@@ -1,4 +1,4 @@
-import { EventStatus } from '@/app/(pages)/(dashboard)/events/types/event.types';
+import { EventStatus } from '@/types/event.types';
 
 type EventStatusesType = {
   value: EventStatus;

@@ -1,19 +1,20 @@
 'use client';
-import { NAVIGATION_ITEMS } from '@/constants/NAVIGATION_ITEMS';
+import ThemeChanger from '@/components/shared/ThemeChanger';
+import { NAVIGATION_ITEMS } from '@/constants';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ArrowLeftIcon } from './shared/Icons';
 import MyTooltip from './shared/MyTooltip';
-import ThemeChanger from '@/components/shared/ThemeChanger';
-import { SIDEBAR_ICON_SIZE } from '@/constants';
-import useMediaQuery from '@/hooks/useMediaQuery';
+
+const SIDEBAR_ICON_SIZE = 20;
+
 interface SidebarProps extends React.ComponentProps<'aside'> {}
 const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
   const [isOpened, setIsOpened] = useState(false);
   const pathname = usePathname();
-  const items = useMemo(() => Object.entries(NAVIGATION_ITEMS), []);
   const { isMatched: isTablet } = useMediaQuery({
     minWidth: 640,
     maxWidth: 768,
@@ -38,7 +39,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...props }) => {
       {...props}
     >
       <nav className="relative flex flex-1 flex-col gap-2 bg-background px-3 pt-12 text-foreground">
-        {items.map(([key, value]) => (
+        {Object.entries(NAVIGATION_ITEMS).map(([key, value]) => (
           <MyTooltip
             className={cn({
               hidden: isOpened,

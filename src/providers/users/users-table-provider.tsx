@@ -1,31 +1,31 @@
 'use client';
-import { COLUMNS } from '@/app/(pages)/(dashboard)/events/constants/COLUMNS';
-import { Event } from '@/app/(pages)/(dashboard)/events/types/event.types';
+import { COLUMNS } from '@/app/(pages)/(dashboard)/users/constants/COLUMNS';
+import { useUsers } from '@/providers/users/users-provider';
+import { User } from '@/types/users.types';
 import { getCoreRowModel, Table, useReactTable } from '@tanstack/react-table';
 import { createContext, useContext } from 'react';
-import { useEvents } from './events-provider';
 
 type ContextType<TData> = {
   table: Table<TData>;
 };
-const EventsTableContext = createContext<ContextType<Event>>({
-  table: {} as Table<Event>,
+const UsersTableContext = createContext<ContextType<User>>({
+  table: {} as Table<User>,
 });
 
-const EventsTableProvider = ({
+const UsersTableProvider = ({
   children,
-  events = [],
+  users = [],
 }: {
   children: React.ReactNode;
-  events: Event[];
+  users: User[];
 }) => {
   const {
     params,
     queryResult: { data },
-  } = useEvents();
+  } = useUsers();
 
   const table = useReactTable({
-    data: events,
+    data: users,
     columns: COLUMNS,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -39,24 +39,24 @@ const EventsTableProvider = ({
   });
 
   return (
-    <EventsTableContext.Provider
+    <UsersTableContext.Provider
       value={{
         table,
       }}
     >
       {children}
-    </EventsTableContext.Provider>
+    </UsersTableContext.Provider>
   );
 };
 
-const useEventsTable = () => {
-  const context = useContext(EventsTableContext);
+const useUsersTable = () => {
+  const context = useContext(UsersTableContext);
 
   if (context === undefined) {
-    throw new Error('useEventsTable must be used within a EventsTableProvider');
+    throw new Error('useUsersTable must be used within a UsersTableProvider');
   }
 
   return context;
 };
 
-export { EventsTableProvider, useEventsTable };
+export { UsersTableProvider, useUsersTable };
