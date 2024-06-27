@@ -53,7 +53,7 @@ export const COLUMNS: ColumnDef<Event>[] = [
     },
   },
   {
-    id: 'Accept/Reject',
+    id: 'Actions',
     header: 'Action',
     cell: ({ row }) => (
       <div className="flex items-center gap-2 text-xs">
@@ -73,7 +73,7 @@ export const COLUMNS: ColumnDef<Event>[] = [
     ),
   },
   {
-    id: 'actions',
+    id: 'mutate',
     cell: ({ row }) => (
       <CellAction
         deleteFunction={EventsApi.delete}
