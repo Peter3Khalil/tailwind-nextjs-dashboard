@@ -20,7 +20,8 @@ export type Event = {
   eventStartTime: string;
   eventEndTime: string;
   eventLocation: string;
-  eventImages: string[];
+  eventImages?: string[];
+  eventImage?: string;
   ticketEventLink: string;
   eventPrice: number;
   eventDescription: string;

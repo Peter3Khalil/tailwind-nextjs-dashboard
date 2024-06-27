@@ -1,6 +1,7 @@
 import CellAction from '@/components/shared/CellAction';
 import SelectAllCheckbox from '@/components/shared/SelectAllCheckbox';
 import SelectRowCheckbox from '@/components/shared/SelectRowCheckbox';
+import UserComponent from '@/components/users/UserComponent';
 import UsersApi from '@/services/UsersApi';
 import { User } from '@/types/users.types';
 import { ColumnDef } from '@tanstack/react-table';
@@ -21,7 +22,7 @@ export const COLUMNS: ColumnDef<User>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
-    cell: ({ getValue }) => getValue(),
+    cell: ({ row }) => <UserComponent user={row.original} />,
   },
   {
     accessorKey: 'gender',
