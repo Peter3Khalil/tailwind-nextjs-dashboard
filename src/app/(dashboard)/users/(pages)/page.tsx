@@ -50,7 +50,7 @@ const Users = () => {
       <PageHeader>
         <div>
           <div className="flex w-fit flex-col sm:flex-row sm:items-center sm:gap-2">
-            <PageTitle>Users ({data?.data.totlaCount || 0})</PageTitle>
+            <PageTitle>Users ({data?.data.results || 0})</PageTitle>
             <div className="flex items-center gap-1">
               {RequestActionsButtons[requestState]}
             </div>
