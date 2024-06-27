@@ -5,6 +5,7 @@ import {
   PageHeader,
   PageTitle,
 } from '@/components/layouts/PageLayout';
+import ColumnsVisibilityDropMenu from '@/components/shared/ColumnsVisibilityDropMenu';
 import { UserIcon } from '@/components/shared/Icons';
 import PaginationControl from '@/components/shared/PaginationControl';
 import Search from '@/components/shared/Search';
@@ -63,7 +64,10 @@ const Users = () => {
           </Link>
         </Button>
       </PageHeader>
-      <Search setParams={setParams} />
+      <div className="flex w-full items-center justify-between gap-2 pr-2">
+        <Search setParams={setParams} />
+        <ColumnsVisibilityDropMenu table={table} />
+      </div>
       <TableViewer
         table={table}
         isFetching={isFetching}

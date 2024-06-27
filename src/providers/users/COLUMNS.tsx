@@ -10,11 +10,13 @@ export const COLUMNS: ColumnDef<User>[] = [
     id: 'select',
     header: ({ table }) => <SelectAllCheckbox table={table} />,
     cell: ({ row }) => <SelectRowCheckbox row={row} />,
+    enableHiding: false,
   },
   {
     accessorKey: '_id',
     header: 'Id',
     cell: ({ row }) => row.index + 1,
+    enableHiding: false,
   },
   {
     accessorKey: 'name',
@@ -36,5 +38,6 @@ export const COLUMNS: ColumnDef<User>[] = [
         model={row.original}
       />
     ),
+    enableHiding: false,
   },
 ];

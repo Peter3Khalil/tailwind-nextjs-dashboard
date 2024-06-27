@@ -16,28 +16,35 @@ export const COLUMNS: ColumnDef<Event>[] = [
     id: 'select',
     header: ({ table }) => <SelectAllCheckbox table={table} />,
     cell: ({ row }) => <SelectRowCheckbox row={row} />,
+    enableHiding: false,
   },
   {
+    id: 'ID',
     accessorKey: '_id',
     header: 'Id',
     cell: ({ row }) => row.index + 1,
+    enableHiding: false,
   },
   {
+    id: 'Name',
     accessorKey: 'eventName',
     header: 'Name',
     cell: ({ row }) => <EventComponent event={row.original} />,
   },
   {
+    id: 'Date',
     accessorKey: 'eventDate',
     header: 'Date',
     cell: ({ getValue }) => formatDateTime(getValue() as string),
   },
   {
+    id: 'Price',
     accessorKey: 'eventPrice',
     header: 'Price',
     cell: ({ getValue }) => `$${getValue()}`,
   },
   {
+    id: 'Status',
     accessorKey: 'eventStatus',
     header: () => <StatusFiltration />,
     cell: ({ getValue }) => {
@@ -46,7 +53,7 @@ export const COLUMNS: ColumnDef<Event>[] = [
     },
   },
   {
-    id: 'Accept or Reject',
+    id: 'Accept/Reject',
     header: 'Action',
     cell: ({ row }) => (
       <div className="flex items-center gap-2 text-xs">
@@ -75,5 +82,6 @@ export const COLUMNS: ColumnDef<Event>[] = [
         model={row.original}
       />
     ),
+    enableHiding: false,
   },
 ];

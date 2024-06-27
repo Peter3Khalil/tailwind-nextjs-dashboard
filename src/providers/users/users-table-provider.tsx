@@ -2,8 +2,13 @@
 import { COLUMNS } from '@/providers/users/COLUMNS';
 import { useUsers } from '@/providers/users/users-provider';
 import { User } from '@/types/users.types';
-import { getCoreRowModel, Table, useReactTable } from '@tanstack/react-table';
-import { createContext, useContext } from 'react';
+import {
+  getCoreRowModel,
+  Table,
+  useReactTable,
+  VisibilityState,
+} from '@tanstack/react-table';
+import { createContext, useContext, useState } from 'react';
 
 type ContextType<TData> = {
   table: Table<TData>;
@@ -23,17 +28,20 @@ const UsersTableProvider = ({
     params,
     queryResult: { data },
   } = useUsers();
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
     data: users,
     columns: COLUMNS,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       pagination: {
         pageIndex: params.page - 1 || 0,
         pageSize: params.limit || 10,
       },
+      columnVisibility,
     },
     rowCount: data?.data.totlaCount || 0,
   });

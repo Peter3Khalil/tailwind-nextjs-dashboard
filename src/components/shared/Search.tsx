@@ -50,7 +50,7 @@ const Search = <T extends GetAllQueryParams>({
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 rounded border px-4 md:w-fit',
+        'flex w-full items-center justify-between gap-2 rounded border px-4 md:w-fit',
         {
           'border-primary': isFocused,
         },
