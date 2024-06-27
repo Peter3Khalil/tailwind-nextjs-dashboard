@@ -13,16 +13,16 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 
-interface DataTableProps<TData>
+interface DataTableLayoutProps<TData>
   extends React.ComponentProps<typeof ScrollArea> {
   table: Table<TData>;
 }
 
-const DataTable = <TData,>({
+const DataTableLayout = <TData,>({
   table,
   className,
   ...props
-}: DataTableProps<TData>) => {
+}: DataTableLayoutProps<TData>) => {
   return (
     <ScrollArea className={cn('h-full w-full', className)} {...props}>
       <div className="h-full w-full">
@@ -83,4 +83,4 @@ const DataTable = <TData,>({
   );
 };
 
-export default DataTable;
+export default DataTableLayout;

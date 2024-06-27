@@ -1,5 +1,5 @@
 'use client';
-import ThemeChanger from '@/components/shared/ThemeChanger';
+import ThemeChanger from '@/components/ThemeChanger';
 import { NAVIGATION_ITEMS } from '@/constants';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';

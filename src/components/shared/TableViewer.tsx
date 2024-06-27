@@ -1,5 +1,5 @@
 'use client';
-import DataTable from '@/components/data-table';
+import DataTableLayout from '@/components/layouts/DataTableLayout';
 import { cn } from '@/lib/utils';
 import { Table } from '@tanstack/react-table';
 interface TableViewerProps<TData> {
@@ -18,7 +18,7 @@ const TableViewer = <TData,>({
         'animate-pulse duration-700': isLoading || isFetching,
       })}
     >
-      <DataTable table={table} />
+      <DataTableLayout table={table} />
     </div>
   );
 };
