@@ -1,6 +1,7 @@
 import { EVENT_STATUSES_COMPONENTS } from '@/app/(dashboard)/events/constants/EVENT_STATUSES_COMPONENTS';
 import AcceptButton from '@/components/events/AcceptButton';
 import EventComponent from '@/components/events/EventComponent';
+import PriceSorting from '@/components/events/PriceSorting';
 import RejectButton from '@/components/events/RejectButton';
 import StatusFiltration from '@/components/events/StatusFiltration';
 import CellAction from '@/components/shared/CellAction';
@@ -40,7 +41,7 @@ export const COLUMNS: ColumnDef<Event>[] = [
   {
     id: 'Price',
     accessorKey: 'eventPrice',
-    header: 'Price',
+    header: () => <PriceSorting />,
     cell: ({ getValue }) => `$${getValue()}`,
   },
   {

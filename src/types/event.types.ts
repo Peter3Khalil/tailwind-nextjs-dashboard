@@ -78,6 +78,7 @@ export type EventStatus = 'pending' | 'accepted' | 'rejected' | 'all';
 
 export type EventsQueryParams = GetAllQueryParams & {
   eventStatus: EventStatus;
+  sort?: 'eventPrice' | '-eventPrice';
 };
 
 export type EventStatusWithOutAll = Exclude<EventStatus, 'all'>;
