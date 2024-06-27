@@ -1,16 +1,11 @@
-import { PaginationResult } from '@/types/global.types';
+import { GetAllResponse } from '@/types/global.types';
 
 export type LoginResponse = {
   data: User;
   token: string;
 };
 
-export type GetAllUsersResponse = {
-  results: number;
-  totlaCount: number;
-  paginationResult: PaginationResult;
-  data: User[];
-};
+export type GetAllUsersResponse = GetAllResponse<User>;
 
 export type User = {
   _id: string;

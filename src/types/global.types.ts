@@ -8,3 +8,10 @@ export type GetAllQueryParams = {
   limit: number;
   keyword?: string;
 };
+
+export type GetAllResponse<T> = {
+  results: number;
+  totlaCount: number;
+  paginationResult: PaginationResult;
+  data: T[];
+};

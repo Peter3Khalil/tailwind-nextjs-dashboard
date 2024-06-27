@@ -1,11 +1,6 @@
-import { GetAllQueryParams, PaginationResult } from '@/types/global.types';
+import { GetAllQueryParams, GetAllResponse } from '@/types/global.types';
 
-export type GetAllEventsResponse = {
-  results: number;
-  totlaCount: number;
-  paginationResult: PaginationResult;
-  data: Event[];
-};
+export type GetAllEventsResponse = GetAllResponse<Event>;
 
 export type Event = {
   _id: string;
