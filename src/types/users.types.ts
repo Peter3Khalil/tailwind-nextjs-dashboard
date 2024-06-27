@@ -26,7 +26,7 @@ export type User = {
   emailVerifyCode?: string;
   emailVerifyExpires?: string;
   emailVerified?: boolean;
-  role: string;
+  role: 'user' | 'admin';
   active?: boolean;
   wishlist: unknown[];
   calendar: unknown[];
@@ -37,4 +37,8 @@ export type User = {
 type Interest = {
   _id: string;
   title: string;
+};
+
+export type MutateUser = Omit<User, 'profileImg' | 'interests'> & {
+  profileImg: File;
 };
