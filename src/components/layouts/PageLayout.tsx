@@ -8,7 +8,7 @@ export const PageLayout: FC<React.HTMLAttributes<HTMLDivElement>> = ({
 }) => {
   return (
     <div
-      className={cn('flex h-full w-full flex-col gap-4 pt-2', className)}
+      className={cn('flex h-full w-full flex-col gap-4 sm:pt-2', className)}
       {...props}
     >
       {children}

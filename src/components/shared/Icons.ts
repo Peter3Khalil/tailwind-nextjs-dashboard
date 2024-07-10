@@ -21,4 +21,5 @@ export {
   User as UserIcon,
   LayoutPanelLeft as CategoryIcon,
   Blocks as AddCategoryIcon,
+  Menu as MenuIcon,
 } from 'lucide-react';

@@ -28,7 +28,7 @@ const CustomBreadcrumb: FC<CustomBreadcrumbProps> = ({
   ...props
 }) => {
   return (
-    <Breadcrumb className={cn('hidden sm:flex', className)} {...props}>
+    <Breadcrumb className={cn('flex', className)} {...props}>
       <BreadcrumbList>
         {breadcrumbItems.map((item, index) => (
           <>
