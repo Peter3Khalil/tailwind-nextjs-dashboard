@@ -1,6 +1,7 @@
 'use client';
 
 import { MenuIcon } from '@/components/shared/Icons';
+import ThemeChanger from '@/components/ThemeChanger';
 import {
   Sheet,
   SheetContent,
@@ -35,7 +36,7 @@ const Header = () => {
         </div>
         <SheetContent side={'left'}>
           <SheetHeader className="items-start text-start">
-            <nav className="relative flex w-full flex-1 flex-col items-start gap-2 bg-background text-foreground">
+            <nav className="relative flex w-full flex-1 flex-col items-start gap-2 bg-background pt-6 text-foreground">
               {Object.entries(NAVIGATION_ITEMS).map(([key, value]) => (
                 <Link key={key} href={value.href} className="w-full">
                   <div
@@ -59,6 +60,7 @@ const Header = () => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
+      <ThemeChanger />
     </header>
   );
 };
