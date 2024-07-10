@@ -19,4 +19,6 @@ export {
   Loader2 as LoaderIcon,
   CalendarPlus as CalendarPlusIcon,
   User as UserIcon,
+  LayoutPanelLeft as CategoryIcon,
+  Blocks as AddCategoryIcon,
 } from 'lucide-react';

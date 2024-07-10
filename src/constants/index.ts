@@ -1,5 +1,10 @@
 import { Rubik } from 'next/font/google';
-import { EventIcon, HomeIcon, UsersIcon } from '@/components/shared/Icons';
+import {
+  CategoryIcon,
+  EventIcon,
+  HomeIcon,
+  UsersIcon,
+} from '@/components/shared/Icons';
 import { LucideIcon } from 'lucide-react';
 import { GetAllQueryParams } from '@/types/global.types';
 
@@ -15,7 +20,7 @@ type NavigationItem = {
   readonly icon: LucideIcon;
   readonly name: string;
 };
-type NavigationsKeys = 'dashboard' | 'events' | 'users';
+type NavigationsKeys = 'dashboard' | 'events' | 'users' | 'categories';
 
 export const NAVIGATION_ITEMS: Readonly<
   Record<NavigationsKeys, NavigationItem>
@@ -23,6 +28,7 @@ export const NAVIGATION_ITEMS: Readonly<
   dashboard: { href: '/dashboard', icon: HomeIcon, name: 'Dashboard' },
   events: { href: '/events', icon: EventIcon, name: 'Events' },
   users: { href: '/users', icon: UsersIcon, name: 'Users' },
+  categories: { href: '/categories', icon: CategoryIcon, name: 'Categories' },
 };
 
 export const DEFAULT_QUERY_PARAMS: GetAllQueryParams = {
