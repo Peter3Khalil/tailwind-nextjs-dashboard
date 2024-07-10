@@ -34,3 +34,7 @@ export const toastError = (
 };
 
 export const isClient = () => typeof window !== 'undefined';
+
+export const Capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

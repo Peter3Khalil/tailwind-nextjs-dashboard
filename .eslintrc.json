@@ -28,7 +28,7 @@
         "patterns": [
           {
             "group": ["../*"],
-            "message": "Please use at least two levels of nesting for imports."
+            "message": "Please use absolute imports"
           }
         ]
       }

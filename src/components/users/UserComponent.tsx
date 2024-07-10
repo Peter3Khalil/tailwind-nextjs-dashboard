@@ -24,7 +24,9 @@ const UserComponent: FC<UserComponentProps> = ({
           className="size-auto items-start justify-start p-0"
         >
           <span className="overflow-hidden text-ellipsis font-semibold">
-            <Link href={`/users/${user._id}`}>{user.name}</Link>
+            <Link href={`/users/${user._id}`} className="capitalize">
+              {user.name}
+            </Link>
           </span>
         </Button>
         <RecordComponent label="Email" value={user.email} />
